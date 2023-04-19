@@ -5,31 +5,35 @@
     <title>AR.js Example</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <script>
+      AFRAME.registerComponent('lock-image', {
+        init: function () {
+          this.imageLocked = false;
+          this.marker = this.el.sceneEl.querySelector('a-marker');
+          this.marker.addEventListener('markerFound', () => {
+            this.imageLocked = true;
+            this.el.setAttribute('visible', true);
+          });
+        },
+
+        tick: function () {
+          if (!this.imageLocked) {
+            if (this.marker.object3D.visible) {
+              this.el.setAttribute('visible', true);
+              this.el.object3D.position.copy(this.marker.object3D.position);
+            } else {
+              this.el.setAttribute('visible', false);
+            }
+          }
+        }
+      });
+    </script>
   </head>
   <body>
     <a-scene embedded arjs="detectionMode: mono_and_matrix;">
-      <a-anchor hit-testing-enabled="true" id="anchor">
-        <a-marker preset="hiro">
-          <a-image position='0.5 1.6 0' src="https://jomoslomo.github.io/s2pv1/s2p/public/radialGraph1.png" width="1" height="1" rotation="-90 0 0"></a-image>
-        </a-marker>
-      </a-anchor>
+      <a-marker preset="hiro"></a-marker>
+      <a-image lock-image position='0.5 1.6 0' src="https://jomoslomo.github.io/s2pv1/s2p/public/radialGraph1.png" width="1" height="1" rotation="-90 0 0"></a-image>
       <a-entity camera></a-entity>
-      <button onclick="toggleAnchor()">Lock/Unlock AR Image</button>
     </a-scene>
-    
-    <script>
-      var anchor = document.querySelector('#anchor');
-      var isLocked = true;
-      
-      function toggleAnchor() {
-        if (isLocked) {
-          anchor.setAttribute('hit-testing-enabled', false);
-          isLocked = false;
-        } else {
-          anchor.setAttribute('hit-testing-enabled', true);
-          isLocked = true;
-        }
-      }
-    </script>
   </body>
 </html>
