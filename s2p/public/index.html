@@ -1,76 +1,8 @@
-
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>AR.js Example</title>
-    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-    <style>
-      .ar-container {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-      }
-
-      .overlay {
-        position: absolute;
-        z-index: 1;
-        top: 10px;
-        left: 10px;
-      }
-    </style>
-    <script>
-      AFRAME.registerComponent('lock-image', {
-        init: function () {
-          this.imageLocked = false;
-          this.marker = this.el.sceneEl.querySelector('a-marker');
-          this.marker.addEventListener('markerFound', () => {
-            if (!this.imageLocked) {
-              this.el.setAttribute('visible', true);
-            }
-          });
-
-          // Expose a method to toggle the image lock
-          this.el.toggleLock = () => {
-            this.imageLocked = !this.imageLocked;
-            document.getElementById('lockStatus').textContent = `Image lock is currently ${this.imageLocked ? 'ON' : 'OFF'}`;
-          };
-        },
-
-        tick: function () {
-          if (!this.imageLocked) {
-            if (this.marker.object3D.visible) {
-              this.el.setAttribute('visible', true);
-              this.el.object3D.position.copy(this.marker.object3D.position);
-            } else {
-              this.el.setAttribute('visible', false);
-            }
-          }
-        }
-      });
-
-      document.addEventListener('DOMContentLoaded', function () {
-        const toggleLockButton = document.getElementById('toggleLock');
-        const image = document.querySelector('[lock-image]');
-        toggleLockButton.addEventListener('click', function () {
-          image.toggleLock();
-        });
-      });
-    </script>
-  </head>
-  <body>
-    <div class="ar-container">
-      <a-scene embedded arjs="detectionMode: mono_and_matrix;">
-        <a-marker preset="hiro"></a-marker>
-        <a-image lock-image position='0.5 1.6 0' src="https://jomoslomo.github.io/s2pv1/s2p/public/radialGraph1.png" width="1" height="1" rotation="-90 0 0"></a-image>
-        <a-entity camera></a-entity>
-      </a-scene>
-      <div class="overlay">
-        <button id="toggleLock">Toggle Image Lock</button>
-        <p id="lockStatus">Image lock is currently OFF</p>
-      </div>
-    </div>
-  </body>
-</html>
+<body>
+  <a-scene embedded arjs="detectionMode: mono_and_matrix;">
+    <a-marker preset="hiro">
+      <a-image position='0 0.6 0' src="https://jomoslomo.github.io/s2pv1/s2p/public/radialGraph1.png" width="1" height="1" rotation="-90 0 0"></a-image>
+      <a-image position='0.5 1.6 0' src="https://jomoslomo.github.io/s2pv1/s2p/public/radialGraph1.png" width="1" height="1" rotation="-90 0 0"></a-image>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>https://github.com/jomoslomo/s2pv1/ 
