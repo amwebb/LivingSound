@@ -8,10 +8,28 @@
   </head>
   <body>
     <a-scene embedded arjs="detectionMode: mono_and_matrix;">
-      <a-marker preset="hiro">
-        <a-image position='0.5 1.6 0' src="https://jomoslomo.github.io/s2pv1/s2p/public/radialGraph1.png" width="1" height="1" rotation="-90 0 0"></a-image>
-      </a-marker>
+      <a-anchor hit-testing-enabled="true" id="anchor">
+        <a-marker preset="hiro">
+          <a-image position='0.5 1.6 0' src="https://jomoslomo.github.io/s2pv1/s2p/public/radialGraph1.png" width="1" height="1" rotation="-90 0 0"></a-image>
+        </a-marker>
+      </a-anchor>
       <a-entity camera></a-entity>
+      <button onclick="toggleAnchor()">Lock/Unlock AR Image</button>
     </a-scene>
+    
+    <script>
+      var anchor = document.querySelector('#anchor');
+      var isLocked = true;
+      
+      function toggleAnchor() {
+        if (isLocked) {
+          anchor.setAttribute('hit-testing-enabled', false);
+          isLocked = false;
+        } else {
+          anchor.setAttribute('hit-testing-enabled', true);
+          isLocked = true;
+        }
+      }
+    </script>
   </body>
 </html>
