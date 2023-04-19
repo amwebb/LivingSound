@@ -25,57 +25,5 @@
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
-    <script>
-      window.onload = function() {
-      document.getElementById('lockButton').addEventListener('click', lockImage);
-      document.getElementById('unlockButton').addEventListener('click', unlockImage);
-
-      var lockedImage = null;
-
-      function lockImage() {
-        var marker = document.getElementById('marker');
-        var image = document.getElementById('image');
-        var scene = document.querySelector('a-scene');
-
-        if (!marker.object3D.visible) {
-          alert("Marker not visible, please point the camera at the marker before locking.");
-          return;
-        }
-
-        lockedImage = image.cloneNode(true);
-
-        // Convert position and rotation from marker to scene coordinate space
-        var worldPosition = new THREE.Vector3();
-        var worldQuaternion = new THREE.Quaternion();
-        image.object3D.getWorldPosition(worldPosition);
-        image.object3D.getWorldQuaternion(worldQuaternion);
-
-        var worldEuler = new THREE.Euler().setFromQuaternion(worldQuaternion, 'YXZ');
-        var worldRotation = new THREE.Vector3(worldEuler.x * 180 / Math.PI, worldEuler.y * 180 / Math.PI, worldEuler.z * 180 / Math.PI);
-
-        lockedImage.setAttribute('position', worldPosition);
-        lockedImage.setAttribute('rotation', worldRotation);
-        scene.appendChild(lockedImage);
-        marker.removeChild(image);
-      }
-
-      function unlockImage() {
-        if (!lockedImage) {
-          alert("No locked image found. Lock an image before unlocking.");
-          return;
-        }
-      
-        var marker = document.getElementById('marker');
-        var scene = document.querySelector('a-scene');
-      
-        scene.removeChild(lockedImage);
-        marker.appendChild(lockedImage);
-        lockedImage.setAttribute('position', '0 0 0');
-        lockedImage.setAttribute('rotation', '-90 0 0');
-        lockedImage.setAttribute('id', 'image'); // Set the ID back to "image"
-        lockedImage = null;
-      }
-      }
-    </script>
   </body>
 </html>
