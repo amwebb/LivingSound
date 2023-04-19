@@ -29,6 +29,7 @@
       <a-entity camera></a-entity>
     </a-scene>
     <script>
+      window.onload = function() {
       document.getElementById('lockButton').addEventListener('click', lockImage);
       document.getElementById('unlockButton').addEventListener('click', unlockImage);
 
@@ -77,7 +78,7 @@
         lockedImage.setAttribute('id', 'image'); // Set the ID back to "image"
         lockedImage = null;
       }
-      
+      }
     </script>
   </body>
 </html>
