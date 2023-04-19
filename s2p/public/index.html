@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -5,6 +7,20 @@
     <title>AR.js Example</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <style>
+      .ar-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+      }
+
+      .overlay {
+        position: absolute;
+        z-index: 1;
+        top: 10px;
+        left: 10px;
+      }
+    </style>
     <script>
       AFRAME.registerComponent('lock-image', {
         init: function () {
@@ -45,13 +61,16 @@
     </script>
   </head>
   <body>
-    <a-scene embedded arjs="detectionMode: mono_and_matrix;">
-      <a-marker preset="hiro"></a-marker>
-      <a-image lock-image position='0.5 1.6 0' src="https://jomoslomo.github.io/s2pv1/s2p/public/radialGraph1.png" width="1" height="1" rotation="-90 0 0"></a-image>
-      <a-entity camera></a-entity>
-    </a-scene>
-    <button id="toggleLock">Toggle Image Lock</button>
-    <p id="lockStatus">Image lock is currently OFF</p>
+    <div class="ar-container">
+      <a-scene embedded arjs="detectionMode: mono_and_matrix;">
+        <a-marker preset="hiro"></a-marker>
+        <a-image lock-image position='0.5 1.6 0' src="https://jomoslomo.github.io/s2pv1/s2p/public/radialGraph1.png" width="1" height="1" rotation="-90 0 0"></a-image>
+        <a-entity camera></a-entity>
+      </a-scene>
+      <div class="overlay">
+        <button id="toggleLock">Toggle Image Lock</button>
+        <p id="lockStatus">Image lock is currently OFF</p>
+      </div>
+    </div>
   </body>
 </html>
-
