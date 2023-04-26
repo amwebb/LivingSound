@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-    
+<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.3.0/dist/aframe-master.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
     <style>
       #overlay {
         position: fixed;
@@ -21,44 +20,35 @@
     </div>
     <a-scene embedded arjs>
       <a-marker id="marker" preset="hiro">
-        <a-image id="image" position='0 0 0' src= "https://jomoslomo.github.io/s2pv1/s2p/public/radialGraph1.png" width="1" height="1" rotation="-90 0 0"></a-image>
+        <a-image id="image" position='0 0 0' src="https://jomoslomo.github.io/s2pv1/s2p/public/radialGraph1.png" width="1" height="1" rotation="-90 0 0"></a-image>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
     <script>
-      window.onload = function() {
       document.getElementById('lockButton').addEventListener('click', lockImage);
       document.getElementById('unlockButton').addEventListener('click', unlockImage);
-
       var lockedImage = null;
-
       function lockImage() {
         var marker = document.getElementById('marker');
         var image = document.getElementById('image');
         var scene = document.querySelector('a-scene');
-
         if (!marker.object3D.visible) {
           alert("Marker not visible, please point the camera at the marker before locking.");
           return;
         }
-
         lockedImage = image.cloneNode(true);
-
         // Convert position and rotation from marker to scene coordinate space
         var worldPosition = new THREE.Vector3();
         var worldQuaternion = new THREE.Quaternion();
         image.object3D.getWorldPosition(worldPosition);
         image.object3D.getWorldQuaternion(worldQuaternion);
-
         var worldEuler = new THREE.Euler().setFromQuaternion(worldQuaternion, 'YXZ');
         var worldRotation = new THREE.Vector3(worldEuler.x * 180 / Math.PI, worldEuler.y * 180 / Math.PI, worldEuler.z * 180 / Math.PI);
-
         lockedImage.setAttribute('position', worldPosition);
         lockedImage.setAttribute('rotation', worldRotation);
         scene.appendChild(lockedImage);
         marker.removeChild(image);
       }
-
       function unlockImage() {
         if (!lockedImage) {
           alert("No locked image found. Lock an image before unlocking.");
@@ -75,7 +65,7 @@
         lockedImage.setAttribute('id', 'image'); // Set the ID back to "image"
         lockedImage = null;
       }
-      }
+      
     </script>
   </body>
 </html>
