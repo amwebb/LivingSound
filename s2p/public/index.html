@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html>
   <head>
-<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.3.0/dist/aframe-master.min.js"></script>
-<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.3.0/dist/aframe-master.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
     <style>
       #overlay {
@@ -17,17 +19,22 @@
     <div id="overlay">
       <button id="lockButton">Lock Image</button>
       <button id="unlockButton">Unlock Image</button>
+      <br>
+      <label for="sizeSlider">Size:</label>
+      <input type="range" id="sizeSlider" name="sizeSlider" min="1" max="20" value="10" step="0.1">
     </div>
     <a-scene embedded arjs>
       <a-marker id="marker" preset="hiro">
-        <a-image id="image" position='0 0 0' src="https://jomoslomo.github.io/s2pv1/s2p/public/myImage-10.png" width="5" height="5" rotation="-90 0 0"></a-image>
+        <a-image id="image" position='0 0 0' src="radialGraph1.png" width="10" height="10" rotation="-90 0 0"></a-image>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
     <script>
       document.getElementById('lockButton').addEventListener('click', lockImage);
       document.getElementById('unlockButton').addEventListener('click', unlockImage);
+      document.getElementById('sizeSlider').addEventListener('input', updateImageSize);
       var lockedImage = null;
+
       function lockImage() {
         var marker = document.getElementById('marker');
         var image = document.getElementById('image');
@@ -61,11 +68,23 @@
         scene.removeChild(lockedImage);
         marker.appendChild(lockedImage);
         lockedImage.setAttribute('position', '0 0 0');
-        lockedImage.setAttribute('rotation', '0 0 0');
+        lockedImage.setAttribute('rotation', '-90 0 0');
         lockedImage.setAttribute('id', 'image'); // Set the ID back to "image"
         lockedImage = null;
       }
-      
+
+      function updateImageSize() {
+        var size = document.getElementById('sizeSlider').value;
+        var image = document.getElementById('image');
+        if (image) {
+          image.setAttribute('width', size);
+          image.setAttribute('height', size);
+        }
+        if (lockedImage) {
+          lockedImage.setAttribute('width', size);
+          lockedImage.setAttribute('height', size);
+        }
+      }
     </script>
   </body>
 </html>
