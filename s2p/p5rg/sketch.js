@@ -38,7 +38,7 @@ function setup() {
   };
   
   video = createCapture(constraints); // remove this line
-  video.size((height * 9) / 16, height);
+  //video.size((height * 9) / 16, height);
   video.hide();
 }
 
