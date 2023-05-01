@@ -1,16 +1,34 @@
-html, body {
+html, body{
   margin: 0;
   padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
-canvas {
-  display: block;
+#container, #camera--view, #camera--sensor, #camera--output{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
+
+#camera--view, #camera--sensor, #camera--output{
+    transform: scaleX(-1);
+    filter: FlipH;
+    z-index: -10;
+}
+
+
 .button-container {
-  display: flex;
+  display: block;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
-  margin-top: 20px;
+  top: 10px;
+  min-height: 80px;
+  min-width:200px;  
+  left: 20px;
+  z-index: 20;
+  position: absolute;
 }

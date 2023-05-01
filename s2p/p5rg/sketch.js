@@ -69,38 +69,38 @@ function setup() {
   buttonContainer.parent(document.body);
 
 
-  const constraints = {
-    video: {
-      facingMode: "environment", 
-      deviceId: 1,
-      width: 1920,
-      height: 1080
-    },
-    audio: false
-  };
+  // const constraints = {
+  //   video: {
+  //     facingMode: "environment", 
+  //     deviceId: 1,
+  //     width: 1920,
+  //     height: 1080
+  //   },
+  //   audio: false
+  // };
   
-  video = createCapture(constraints);
-  //video.size(windowWidth, windowHeight); // modify size of video capture element
-  video.hide();
+  // video = createCapture(constraints);
+  // //video.size(windowWidth, windowHeight); // modify size of video capture element
+  // video.hide();
 
   // Create slider and label for radial graph thickness
   thicknessSlider = createSlider(1, 50, 10);
-  thicknessSlider.position(20, 50);
+  thicknessSlider.position(20, 110 );
   thicknessLabel = createDiv('Radial Graph Thickness');
-  thicknessLabel.position(20, 20);
+  thicknessLabel.position(20, 80);
 
   radiusSlider = createSlider(1,width, 25);
-  radiusSlider.position(20, 75);
+  radiusSlider.position(20,145);
 
 }
 
 function draw() {
-  console.log("width:" + width + " height:" +height);
-  push();
-  translate(width/2, height/2);
-  scale(1920/width);
-  image(video, 0, 0); // display video
-  pop();
+  // console.log("width:" + width + " height:" +height);
+  // push();
+  // translate(width/2, height/2);
+  // scale(1920/width);
+  // image(video, 0, 0); // display video
+  // pop();
   textSize(20); // set text size
   fill(0); // set fill color
   if (!isRecording && !isPlaying) {
