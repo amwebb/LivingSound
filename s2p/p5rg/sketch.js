@@ -3,17 +3,17 @@ let recorder; // sound recorder
 let soundFile; // recorded sound file
 let isRecording = false; // whether the program is currently recording
 let isPlaying = false; // whether the program is currently playing back recorded sound
-let captureButton, stopButton, playbackButton, toggle3D,  uploadButton; // buttons to start, stop, and playback recording
+let captureButton, stopButton, playbackButton, uploadButton; // buttons to start, stop, and playback recording
+
 let displayShape = false;
 let exportButton;
 let video; // webcam video
+let thicknessSlider; // slider to control radial graph thickness
+let thicknessLabel; // label for radial graph thickness slider
 
 function setup() {
-   createCanvas(windowWidth, windowHeight); // create canvas
-  // video = createCapture(VIDEO); // create video object for webcam capture
-  // //video.size(400, 400); // set video size
-  // video.hide(); // hide video element
-  imageMode(CENTER);
+  imageMode(CENTER)
+  createCanvas(windowWidth, windowHeight); // create canvas
   mic = new p5.AudioIn(); // create audio input object
   mic.start(); // start audio input
   recorder = new p5.SoundRecorder(); // create sound recorder object
@@ -26,32 +26,47 @@ function setup() {
   playbackButton = createButton('Playback'); // create playback button
   playbackButton.mousePressed(playbackRecording); // call playbackRecording() function when playback button is pressed
   exportButton = createButton('Export Radial Graph');
-  exportButton.mousePressed(exportImage);
+  exportButton.mouseClicked(exportImage);
   uploadButton = createButton('Upload');
-  uploadButton.mousePressed(uploadFile);
-
+  uploadButton.mouseClicked(uploadFile);
 
   const constraints = {
     video: {
       facingMode: "environment", 
-      deviceId: 1
+      deviceId: 1,
+      width: 1920,
+      height: 1080
     },
     audio: false
   };
   
-  video = createCapture(constraints); // remove this line
-  video.size(width, (width * 16) / 9);
+  video = createCapture(constraints);
+  //video.size(windowWidth, windowHeight); // modify size of video capture element
   video.hide();
+
+  // Create slider and label for radial graph thickness
+  thicknessSlider = createSlider(1, 50, 10);
+  thicknessSlider.position(20, 50);
+  thicknessLabel = createDiv('Radial Graph Thickness');
+  thicknessLabel.position(20, 20);
 }
 
 function draw() {
-image(video, width/2, height/2);  // set text alignment
+  console.log("width:" + width + " height:" +height);
+  push();
+  translate(width/2, height/2);
+  scale(1920/width);
+  image(video, 0, 0); // display video
+  pop();
   textSize(20); // set text size
   fill(0); // set fill color
   if (!isRecording && !isPlaying) {
   } else if (isRecording) {
   } else if (isPlaying) {
+    push();
+
     displayRadialGraph(soundFile); // display radial graph of sound file
+    pop();
   }
 
   if (displayShape && isPlaying) {
@@ -93,13 +108,13 @@ function stopPlayback() {
 function displayRadialGraph(sound) {
   let waveform = sound.getPeaks(width/2); // get waveform of sound file
   stroke(255,0,0, 90); // set stroke color
-  strokeWeight(10);
+strokeWeight(thicknessSlider.value());
   noFill(); // remove fill color
   beginShape(); // start shape
   
   for (let i = 0; i < waveform.length; i++) { // loop through waveform
     let angle = map(i, 0, waveform.length, 0, TWO_PI); // map index to angle
-    let radius = map(waveform[i], -1, 1, 0, height/2); // map value to radius
+    let radius = map(waveform[i], -1, 1, 0, height/6); // map value to radius
     let x = width/2 + (radius) * cos(angle); // calculate x-coordinate based on angle and radius
     let y = height/2 + (radius) * sin(angle); // calculate y-coordinate based on angle and radius
     vertex(x, y); // add vertex to shape
@@ -199,6 +214,8 @@ function exportImage() {
   link.click();
   document.body.removeChild(link);
 }
+
+
 function uploadFile() {
   let fileInput = createFileInput(handleFile);
   fileInput.elt.click(); // simulate a click event to open the file picker
