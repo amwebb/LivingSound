@@ -10,7 +10,8 @@ let exportButton;
 let video; // webcam video
 let thicknessSlider; // slider to control radial graph thickness
 let thicknessLabel; // label for radial graph thickness slider
-
+let radiusSlider;
+let radiusLabel
 function setup() {
   imageMode(CENTER)
   createCanvas(windowWidth, windowHeight); // create canvas
@@ -87,6 +88,10 @@ function setup() {
   thicknessSlider.position(20, 50);
   thicknessLabel = createDiv('Radial Graph Thickness');
   thicknessLabel.position(20, 20);
+
+  radiusSlider = createSlider(1,width, 25);
+  radiusSlider.position(20, 75);
+
 }
 
 function draw() {
@@ -152,7 +157,7 @@ strokeWeight(thicknessSlider.value());
   
   for (let i = 0; i < waveform.length; i++) { // loop through waveform
     let angle = map(i, 0, waveform.length, 0, TWO_PI); // map index to angle
-    let radius = map(waveform[i], -1, 1, 0, height/6); // map value to radius
+    let radius = map(waveform[i], -1, 1, 0, radiusSlider.value()); // map value to radius
     let x = width/2 + (radius) * cos(angle); // calculate x-coordinate based on angle and radius
     let y = height/2 + (radius) * sin(angle); // calculate y-coordinate based on angle and radius
     vertex(x, y); // add vertex to shape
