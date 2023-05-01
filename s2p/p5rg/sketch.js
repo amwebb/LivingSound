@@ -19,16 +19,36 @@ function setup() {
   recorder = new p5.SoundRecorder(); // create sound recorder object
   recorder.setInput(mic); // set input for recorder object to audio input
   soundFile = new p5.SoundFile(); // create sound file object
-  captureButton = createButton('Capture'); // create capture button
-  captureButton.mousePressed(startRecording); // call startRecording() function when capture button is pressed
-  stopButton = createButton('Stop'); // create stop button
-  stopButton.mousePressed(stopRecording); // call stopRecording() function when stop button is pressed
-  playbackButton = createButton('Playback'); // create playback button
-  playbackButton.mousePressed(playbackRecording); // call playbackRecording() function when playback button is pressed
-  exportButton = createButton('Export Radial Graph');
+  captureButton = createButton('Capture');
+  captureButton.mousePressed(startRecording);
+  captureButton.style('font-size', '24px');
+  captureButton.style('width', '120px');
+  captureButton.style('height', '60px');
+  
+  stopButton = createButton('Stop');
+  stopButton.mousePressed(stopRecording);
+  stopButton.style('font-size', '24px');
+  stopButton.style('width', '120px');
+  stopButton.style('height', '60px');
+  
+  playbackButton = createButton('Playback');
+  playbackButton.mousePressed(playbackRecording);
+  playbackButton.style('font-size', '24px');
+  playbackButton.style('width', '120px');
+  playbackButton.style('height', '60px');
+  
+  exportButton = createButton('Export Graph');
   exportButton.mouseClicked(exportImage);
+  exportButton.style('font-size', '24px');
+  exportButton.style('width', '180px');
+  exportButton.style('height', '60px');
+  
   uploadButton = createButton('Upload');
   uploadButton.mouseClicked(uploadFile);
+  uploadButton.style('font-size', '24px');
+  uploadButton.style('width', '120px');
+  uploadButton.style('height', '60px');
+  
 
   const constraints = {
     video: {
