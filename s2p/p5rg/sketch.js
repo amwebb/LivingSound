@@ -19,36 +19,54 @@ function setup() {
   recorder = new p5.SoundRecorder(); // create sound recorder object
   recorder.setInput(mic); // set input for recorder object to audio input
   soundFile = new p5.SoundFile(); // create sound file object
+  
+  
+  const buttonContainer = createDiv();
+  buttonContainer.addClass('button-container');
+
+  // Create the capture button and append it to the container
   captureButton = createButton('Capture');
   captureButton.mousePressed(startRecording);
   captureButton.style('font-size', '24px');
   captureButton.style('width', '120px');
   captureButton.style('height', '60px');
-  
+  buttonContainer.child(captureButton);
+
+  // Create the stop button and append it to the container
   stopButton = createButton('Stop');
   stopButton.mousePressed(stopRecording);
   stopButton.style('font-size', '24px');
   stopButton.style('width', '120px');
   stopButton.style('height', '60px');
-  
+  buttonContainer.child(stopButton);
+
+  // Create the playback button and append it to the container
   playbackButton = createButton('Playback');
   playbackButton.mousePressed(playbackRecording);
   playbackButton.style('font-size', '24px');
   playbackButton.style('width', '120px');
   playbackButton.style('height', '60px');
-  
+  buttonContainer.child(playbackButton);
+
+  // Create the export button and append it to the container
   exportButton = createButton('Export Graph');
   exportButton.mouseClicked(exportImage);
   exportButton.style('font-size', '24px');
   exportButton.style('width', '180px');
   exportButton.style('height', '60px');
-  
+  buttonContainer.child(exportButton);
+
+  // Create the upload button and append it to the container
   uploadButton = createButton('Upload');
   uploadButton.mouseClicked(uploadFile);
   uploadButton.style('font-size', '24px');
   uploadButton.style('width', '120px');
   uploadButton.style('height', '60px');
-  
+  buttonContainer.child(uploadButton);
+
+  // Append the button container to the body of the HTML document
+  buttonContainer.parent(document.body);
+
 
   const constraints = {
     video: {
