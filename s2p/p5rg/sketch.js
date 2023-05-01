@@ -3,7 +3,7 @@ let recorder; // sound recorder
 let soundFile; // recorded sound file
 let isRecording = false; // whether the program is currently recording
 let isPlaying = false; // whether the program is currently playing back recorded sound
-let captureButton, stopButton, playbackButton, toggle3D; // buttons to start, stop, and playback recording
+let captureButton, stopButton, playbackButton, toggle3D,  uploadButton; // buttons to start, stop, and playback recording
 let displayShape = false;
 let exportButton;
 let video; // webcam video
@@ -26,7 +26,9 @@ function setup() {
   playbackButton = createButton('Playback'); // create playback button
   playbackButton.mousePressed(playbackRecording); // call playbackRecording() function when playback button is pressed
   exportButton = createButton('Export Radial Graph');
-  exportButton.mouseClicked(exportImage);
+  exportButton.mousePressed(exportImage);
+  uploadButton = createButton('Upload');
+  uploadButton.mousePressed(uploadFile);
 
 
   const constraints = {
@@ -62,6 +64,7 @@ image(video, width/2, height/2);  // set text alignment
 
 function startRecording() {
   if (!isRecording) { // if program is not currently recording
+    userStartAudio();
     recorder.record(soundFile); // start recording into sound file object
     isRecording = true; // set recording flag to true
   }
@@ -195,4 +198,18 @@ function exportImage() {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+function uploadFile() {
+  let fileInput = createFileInput(handleFile);
+  fileInput.elt.click(); // simulate a click event to open the file picker
+}
+
+function handleFile(file) {
+  if (file.type === 'audio') {
+    soundFile = loadSound(file.data, function() {
+      console.log('Audio file loaded successfully');
+    });
+  } else {
+    console.error('Invalid file type. Please select an audio file.');
+  }
 }
