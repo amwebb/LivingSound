@@ -101,6 +101,7 @@ function draw() {
   // scale(1920/width);
   // image(video, 0, 0); // display video
   // pop();
+  clear();
   textSize(20); // set text size
   fill(0); // set fill color
   if (!isRecording && !isPlaying) {
