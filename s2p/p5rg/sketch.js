@@ -4,7 +4,7 @@ let soundFile; // recorded sound file
 let isRecording = false; // whether the program is currently recording
 let isPlaying = false; // whether the program is currently playing back recorded sound
 let captureButton, stopButton, playbackButton, uploadButton; // buttons to start, stop, and playback recording
-
+let graphGenerated = false;
 let displayShape = false;
 let exportButton;
 let video; // webcam video
@@ -95,28 +95,23 @@ function setup() {
 }
 
 function draw() {
-  // console.log("width:" + width + " height:" +height);
-  // push();
-  // translate(width/2, height/2);
-  // scale(1920/width);
-  // image(video, 0, 0); // display video
-  // pop();
   clear();
   textSize(20); // set text size
   fill(0); // set fill color
+
   if (!isRecording && !isPlaying) {
+    if (graphGenerated) {
+      displayRadialGraph(soundFile);
+    }
   } else if (isRecording) {
+    // ...
   } else if (isPlaying) {
     push();
-
     displayRadialGraph(soundFile); // display radial graph of sound file
     pop();
   }
-
-  if (displayShape && isPlaying) {
-    displayRadialGraph(soundFile); // display the 3D shape if displayShape is true and sound is playing
-  }
 }
+
 
 
 
@@ -141,18 +136,21 @@ function playbackRecording() {
   if (!isRecording && !isPlaying && soundFile.duration() > 0) { // if program is not currently recording or playing back and sound file has recorded audio
     soundFile.play(); // play back sound file
     isPlaying = true; // set playing flag to true
-    //soundFile.onended(stopPlayback); // call stopPlayback() function when playback is complete
+    
+    soundFile.onended(stopPlayback); // call stopPlayback() function when playback is complete
   }
 }
 
 function stopPlayback() {
-  isPlaying = true; // set playing flag to false
+  isPlaying = false; // set playing flag to false
+  graphGenerated = true;
 }
+
 
 function displayRadialGraph(sound) {
   let waveform = sound.getPeaks(width/2); // get waveform of sound file
   stroke(255,0,0, 90); // set stroke color
-strokeWeight(thicknessSlider.value());
+  strokeWeight(thicknessSlider.value());
   noFill(); // remove fill color
   beginShape(); // start shape
   
