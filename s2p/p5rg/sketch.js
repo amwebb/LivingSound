@@ -13,8 +13,7 @@ let thicknessLabel; // label for radial graph thickness slider
 let radiusSlider;
 let radiusLabel
 let amplitudeSlider; 
-let touchStartX, touchStartY;
-let currentAngle = 0;
+
 let graphX, graphY;
 let amp
 
@@ -161,11 +160,6 @@ function stopPlayback() {
 
 
 function displayRadialGraph(sound) {
-
-  push();
-  translate(graphX, graphY);
-  rotate(currentAngle);
-
   let waveform = sound.getPeaks(width / 2); // get waveform of sound file
   stroke(255, 0, 0, 90); // set stroke color
   strokeWeight(thicknessSlider.value());
@@ -182,7 +176,6 @@ function displayRadialGraph(sound) {
   }
   // noLoop();
   endShape(CLOSE); // end shape and connect last vertex to first vertex
-pop();
 }
 
 
@@ -332,30 +325,4 @@ if (d < radiusSlider.value()) {
 
 function mouseReleased() {
 dragging = false;
-}
-function touchStarted(event) {
-  if (event.type === 'touchstart') {
-    touchStartX = event.touches[0].clientX;
-    touchStartY = event.touches[0].clientY;
-  }
-}
-
-function touchMoved(event) {
-  if (event.type === 'touchmove' && event.touches.length === 1) {
-    let touchX = event.touches[0].clientX;
-    let touchY = event.touches[0].clientY;
-    
-    let touchDeltaX = touchX - touchStartX;
-    let touchDeltaY = touchY - touchStartY;
-
-    let angleDelta = atan2(touchDeltaY, touchDeltaX);
-    currentAngle = angleDelta;
-  }
-}
-
-function touchEnded(event) {
-  if (event.type === 'touchend') {
-    touchStartX = undefined;
-    touchStartY = undefined;
-  }
 }
