@@ -13,10 +13,10 @@ let thicknessLabel; // label for radial graph thickness slider
 let radiusSlider;
 let radiusLabel
 let amplitudeSlider; 
+let ampLabel;
 let interpolationValue = 0.5;
 let interpolationSlider;
 let graphX, graphY;
-let ampLabel;
 let currentScale = 1, currentAngle = 0;
 
 let transform = {
@@ -115,13 +115,13 @@ function setup() {
   // Create slider and label for radial graph thickness
   thicknessSlider = createSlider(1, 50, 10);
   thicknessSlider.position(20, 110 );
-  thicknessLabel = createDiv('Radial Graph Thickness');
+  thicknessLabel = createDiv('Stroke Width');
   thicknessLabel.position(20, 80);
 
   amplitudeSlider = createSlider(1, 200, 100);
   amplitudeSlider.position(20, 180);
-  ampLabel.position(20, 110);
-  ampLabel.createDiv('Amplitude');
+  ampLabel = createDiv('Amplitude');
+  ampLabel.position(20, 160);
 
 
 }
