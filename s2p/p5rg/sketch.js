@@ -12,7 +12,11 @@ let thicknessSlider; // slider to control radial graph thickness
 let thicknessLabel; // label for radial graph thickness slider
 let radiusSlider;
 let radiusLabel
+let amplitudeSlider; 
+let touchStartX, touchStartY;
+let currentAngle = 0;
 let graphX, graphY;
+let amp
 
 function setup() {
   imageMode(CENTER)
@@ -89,12 +93,10 @@ function setup() {
   // Create slider and label for radial graph thickness
   thicknessSlider = createSlider(1, 50, 10);
   thicknessSlider.position(20, 110 );
-  thicknessLabel = createDiv('Radial Graph Thickness');
-  thicknessLabel.position(20, 80);
-
   radiusSlider = createSlider(1,width, 25);
   radiusSlider.position(20,145);
-
+  amplitudeSlider = createSlider(1, 200, 100);
+  amplitudeSlider.position(20, 180);
 }
 
 function draw() {
@@ -159,36 +161,30 @@ function stopPlayback() {
 
 
 function displayRadialGraph(sound) {
-  let waveform = sound.getPeaks(width/2); // get waveform of sound file
-  stroke(255,0,0, 90); // set stroke color
+
+  push();
+  translate(graphX, graphY);
+  rotate(currentAngle);
+
+  let waveform = sound.getPeaks(width / 2); // get waveform of sound file
+  stroke(255, 0, 0, 90); // set stroke color
   strokeWeight(thicknessSlider.value());
   noFill(); // remove fill color
   beginShape(); // start shape
-  
+
   for (let i = 0; i < waveform.length; i++) { // loop through waveform
     let angle = map(i, 0, waveform.length, 0, TWO_PI); // map index to angle
-    let radius = map(waveform[i], -1, 1, 0, radiusSlider.value()); // map value to radius
+    let adjustedWaveform = waveform[i] * (amplitudeSlider.value() / 100); // adjust waveform value by amplitude slider
+    let radius = map(adjustedWaveform, -1, 1, 0, radiusSlider.value()); // map adjusted value to radius
     let x = graphX + (radius) * cos(angle);
-  let y = graphY + (radius) * sin(angle);vertex(x, y); // add vertex to shape
+    let y = graphY + (radius) * sin(angle);
+    vertex(x, y); // add vertex to shape
   }
- // noLoop();
-  endShape(CLOSE); // end shape and connect last vertex to first vertex
-  
-  //   push();
-  //   beginShape(); // start shape
-  //   strokeWeight(3);
-  //   noFill();
-  // for (let i = 0; i < waveform.length; i++) { // loop through waveform
-  //   let angle = map(i, 0, waveform.length, 0, TWO_PI); // map index to angle
-  //   let radius = map(waveform[i], -1, 1, 0, height/2.5); // map value to radius
-  //   let x = width/2 + radius * cos(angle); // calculate x-coordinate based on angle and radius
-  //   let y = height/2 + radius * sin(angle); // calculate y-coordinate based on angle and radius
-  //   vertex(x, y); // add vertex to shape
-  // }
   // noLoop();
-  // endShape(CLOSE);
-  // pop();
+  endShape(CLOSE); // end shape and connect last vertex to first vertex
+pop();
 }
+
 
 
 
@@ -265,7 +261,28 @@ function exportImage() {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+
+  // Create the export directory if it does not exist
+  if (!fs.existsSync('export')){
+    fs.mkdirSync('export');
+  }
+
+  // Create a file writer object for the audio file
+  let writer = createWriter('export/audio.wav', function(error) {
+    if (error) {
+      console.error('Error creating file writer:', error);
+      return;
+    }
+
+    // Write the audio data to the file
+    writer.write(soundFile.data);
+
+    // Close the file writer object
+    writer.close();
+  });
 }
+
+
 
 
 function uploadFile() {
@@ -275,6 +292,10 @@ function uploadFile() {
 
 function handleFile(file) {
   if (file.type === 'audio') {
+    // Clear the previous sound file
+    soundFile.dispose();
+
+    // Load the new sound file
     soundFile = loadSound(file.data, function() {
       console.log('Audio file loaded successfully');
       graphGenerated = true; // Set graphGenerated to true so the new graph will be displayed
@@ -284,6 +305,7 @@ function handleFile(file) {
     console.error('Invalid file type. Please select an audio file.');
   }
 }
+
 
 // for (let i = 0; i < waveform.length; i++) {
 //   // ...
@@ -304,9 +326,36 @@ function mousePressed() {
 let d = dist(mouseX, mouseY, graphX, graphY);
 if (d < radiusSlider.value()) {
   dragging = true;
+  console.log(d);
 }
 }
 
 function mouseReleased() {
 dragging = false;
+}
+function touchStarted(event) {
+  if (event.type === 'touchstart') {
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+  }
+}
+
+function touchMoved(event) {
+  if (event.type === 'touchmove' && event.touches.length === 1) {
+    let touchX = event.touches[0].clientX;
+    let touchY = event.touches[0].clientY;
+    
+    let touchDeltaX = touchX - touchStartX;
+    let touchDeltaY = touchY - touchStartY;
+
+    let angleDelta = atan2(touchDeltaY, touchDeltaX);
+    currentAngle = angleDelta;
+  }
+}
+
+function touchEnded(event) {
+  if (event.type === 'touchend') {
+    touchStartX = undefined;
+    touchStartY = undefined;
+  }
 }
