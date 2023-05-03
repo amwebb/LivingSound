@@ -12,6 +12,8 @@ let thicknessSlider; // slider to control radial graph thickness
 let thicknessLabel; // label for radial graph thickness slider
 let radiusSlider;
 let radiusLabel
+let graphX, graphY;
+
 function setup() {
   imageMode(CENTER)
   createCanvas(windowWidth, windowHeight); // create canvas
@@ -20,7 +22,8 @@ function setup() {
   recorder = new p5.SoundRecorder(); // create sound recorder object
   recorder.setInput(mic); // set input for recorder object to audio input
   soundFile = new p5.SoundFile(); // create sound file object
-  
+  graphX = width / 2;
+  graphY = height / 2;
   
   const buttonContainer = createDiv();
   buttonContainer.addClass('button-container');
@@ -104,12 +107,19 @@ function draw() {
       displayRadialGraph(soundFile);
     }
   } else if (isRecording) {
-    // ...
+    clear();
   } else if (isPlaying) {
     push();
     displayRadialGraph(soundFile); // display radial graph of sound file
     pop();
   }
+
+  if (dragging) {
+    graphX = mouseX;
+    graphY = mouseY;
+  }
+
+
 }
 
 
@@ -144,6 +154,7 @@ function playbackRecording() {
 function stopPlayback() {
   isPlaying = false; // set playing flag to false
   graphGenerated = true;
+
 }
 
 
@@ -157,9 +168,8 @@ function displayRadialGraph(sound) {
   for (let i = 0; i < waveform.length; i++) { // loop through waveform
     let angle = map(i, 0, waveform.length, 0, TWO_PI); // map index to angle
     let radius = map(waveform[i], -1, 1, 0, radiusSlider.value()); // map value to radius
-    let x = width/2 + (radius) * cos(angle); // calculate x-coordinate based on angle and radius
-    let y = height/2 + (radius) * sin(angle); // calculate y-coordinate based on angle and radius
-    vertex(x, y); // add vertex to shape
+    let x = graphX + (radius) * cos(angle);
+  let y = graphY + (radius) * sin(angle);vertex(x, y); // add vertex to shape
   }
  // noLoop();
   endShape(CLOSE); // end shape and connect last vertex to first vertex
@@ -267,8 +277,36 @@ function handleFile(file) {
   if (file.type === 'audio') {
     soundFile = loadSound(file.data, function() {
       console.log('Audio file loaded successfully');
+      graphGenerated = true; // Set graphGenerated to true so the new graph will be displayed
+      displayRadialGraph(soundFile); // Display the radial graph for the new sound file
     });
   } else {
     console.error('Invalid file type. Please select an audio file.');
   }
+}
+
+// for (let i = 0; i < waveform.length; i++) {
+//   // ...
+
+//   let x = graphX + (radius) * cos(angle);
+//   let y = graphY + (radius) * sin(angle);
+
+//   vertex(x, y);
+// }
+
+// // ...
+// }
+
+// Mouse event handling
+let dragging = false;
+
+function mousePressed() {
+let d = dist(mouseX, mouseY, graphX, graphY);
+if (d < radiusSlider.value()) {
+  dragging = true;
+}
+}
+
+function mouseReleased() {
+dragging = false;
 }
