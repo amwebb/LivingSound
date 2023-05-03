@@ -83,6 +83,9 @@ function setup() {
   const buttonContainer = createDiv();
   buttonContainer.addClass('button-container');
 
+  const label = createDiv();
+  label.addClass('label-class');
+
 
 
   // Create the playback button and append it to the container
@@ -94,10 +97,10 @@ function setup() {
   buttonContainer.child(playbackButton);
 
   // Create the export button and append it to the container
-  exportButton = createButton('Export Graph');
+  exportButton = createButton('Export');
   exportButton.mouseClicked(exportImage);
   exportButton.style('font-size', '24px');
-  exportButton.style('width', '180px');
+  exportButton.style('width', '120px');
   exportButton.style('height', '60px');
   buttonContainer.child(exportButton);
 
@@ -117,13 +120,18 @@ function setup() {
   thicknessSlider.position(20, 110 );
   thicknessLabel = createDiv('Stroke Width');
   thicknessLabel.position(20, 80);
+  label.child(thicknessLabel);
+  label.child(thicknessSlider);
 
   amplitudeSlider = createSlider(1, 200, 100);
   amplitudeSlider.position(20, 180);
+  // amplitudeSlider.style('width', '50%');
   ampLabel = createDiv('Amplitude');
   ampLabel.position(20, 160);
+  label.child(amplitudeSlider);
+  label.child(ampLabel);
 
-
+  // label.parent(docment.body);
 }
 
 function draw() {

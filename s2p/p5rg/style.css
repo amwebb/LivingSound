@@ -34,3 +34,14 @@ html, body{
   position: absolute;
 }
 
+.label-class{
+  display: block;
+  position: absolute;
+  background-color:  rgba(223, 218, 218, .85);
+  width: 200px;
+  height: 220px;
+  top: 10px;
+  left: 20px;
+  padding: 5px;
+  flex-wrap: wrap;
+}
