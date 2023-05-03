@@ -3,15 +3,13 @@ let recorder; // sound recorder
 let soundFile; // recorded sound file
 let isRecording = false; // whether the program is currently recording
 let isPlaying = false; // whether the program is currently playing back recorded sound
-let captureButton, stopButton, playbackButton, uploadButton; // buttons to start, stop, and playback recording
+let playbackButton, uploadButton; // buttons to start, stop, and playback recording
 let graphGenerated = false;
 let displayShape = false;
 let exportButton;
 let video; // webcam video
 let thicknessSlider; // slider to control radial graph thickness
 let thicknessLabel; // label for radial graph thickness slider
-let radiusSlider;
-let radiusLabel
 let amplitudeSlider; 
 let interpolationValue = 0.5;
 let interpolationSlider;
@@ -83,21 +81,6 @@ function setup() {
   const buttonContainer = createDiv();
   buttonContainer.addClass('button-container');
 
-  // Create the capture button and append it to the container
-  captureButton = createButton('Capture');
-  captureButton.mousePressed(startRecording);
-  captureButton.style('font-size', '24px');
-  captureButton.style('width', '120px');
-  captureButton.style('height', '60px');
-  buttonContainer.child(captureButton);
-
-  // Create the stop button and append it to the container
-  stopButton = createButton('Stop');
-  stopButton.mousePressed(stopRecording);
-  stopButton.style('font-size', '24px');
-  stopButton.style('width', '120px');
-  stopButton.style('height', '60px');
-  buttonContainer.child(stopButton);
 
   // Create the playback button and append it to the container
   playbackButton = createButton('Playback');
@@ -129,8 +112,6 @@ function setup() {
   // Create slider and label for radial graph thickness
   thicknessSlider = createSlider(1, 50, 10);
   thicknessSlider.position(20, 110 );
-  radiusSlider = createSlider(1,width, 25);
-  radiusSlider.position(20,145);
   amplitudeSlider = createSlider(1, 200, 100);
   amplitudeSlider.position(20, 180);
 
@@ -154,22 +135,6 @@ function draw() {
   }
 }
 
-function startRecording() {
-  userStartAudio();
-  if (!isRecording) { // if program is not currently recording
-    
-    recorder.record(soundFile); // start recording into sound file object
-    isRecording = true; // set recording flag to true
-  }
-}
-
-function stopRecording() {
-  if (isRecording) { // if program is currently recording
-    recorder.stop(); // stop recording
-    isRecording = false; // set recording flag to false
-    soundFile.playMode('sustain'); // set play mode for sound file to sustain
-  }
-}
 
 function playbackRecording() {
   if (!isRecording && !isPlaying && soundFile.duration() > 0) { // if program is not currently recording or playing back and sound file has recorded audio
@@ -214,59 +179,6 @@ function displayRadialGraph(sound) {
 
 
 
-
-
-// // function displayRadialGraph(sound) {
-// //   let waveform = sound.getPeaks(width); // get waveform of sound file
-// //   push();
-// //   stroke(0); // set stroke color
-// //   noFill(); // remove fill color
-// //   beginShape(); // start shape
-// //   for (let i = 0; i < waveform.length; i++) { // loop through waveform
-// //     let angle = map(i, 0, waveform.length, 0, TWO_PI); // map index to angle
-// //     let radius = map(waveform[i], -1, 1, 0, height/2); // map value to radius
-// //     let x = width/2 + radius * cos(angle); // calculate x-coordinate based on angle and radius
-// //     let y = height/2 + radius * sin(angle); // calculate y-coordinate based on angle and radius
-// //     vertex(x, y); // add vertex to shape
-// //   }
-// //   endShape(CLOSE); // end shape and connect last vertex to first vertex
-// //   pop()
-// // }
-
-
-
-
-function display3DRadialGraph(sound) {
-  let waveform = sound.getPeaks(width); // get waveform of sound file
-  let numCylinders = waveform.length;
-  let angleStep = TWO_PI / numCylinders;
-  orbitControl();
-
-  // Loop through waveform and create cylinders
-  for (let i = 0; i < numCylinders; i++) {
-    let angle = i * angleStep;
-    let radius = map(waveform[i], -1, 1, 50, height / 2);
-    let x = width / 2 + radius * cos(angle);
-    let y = height / 2 + radius * sin(angle);
-
-    // Set cylinder properties
-    let cylHeight = map(waveform[i], -1, 1, 10, 100);
-    let cylDiameter = 5;
-
-    // Draw the cylinder
-    push();
-    translate(x-200, y-200);
-    scale(currentScale);
-    rotateX(HALF_PI);
-    fill(0, 100, 255);
-    noStroke();
-    cylinder(cylDiameter, cylHeight);
-    pop();
-  }
-
-  // Restore original settings
-  //pop();
-}
 
 function exportImage() {
   // Get the canvas element
