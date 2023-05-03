@@ -3,7 +3,7 @@ let recorder; // sound recorder
 let soundFile; // recorded sound file
 let isRecording = false; // whether the program is currently recording
 let isPlaying = false; // whether the program is currently playing back recorded sound
-let playbackButton, uploadButton; // buttons to start, stop, and playback recording
+let captureButton, stopButton, playbackButton, uploadButton; // buttons to start, stop, and playback recording
 let graphGenerated = false;
 let displayShape = false;
 let exportButton;
@@ -16,7 +16,7 @@ let amplitudeSlider;
 let interpolationValue = 0.5;
 let interpolationSlider;
 let graphX, graphY;
-let amp;
+let ampLabel;
 let currentScale = 1, currentAngle = 0;
 
 let transform = {
@@ -84,6 +84,7 @@ function setup() {
   buttonContainer.addClass('button-container');
 
 
+
   // Create the playback button and append it to the container
   playbackButton = createButton('Playback');
   playbackButton.mousePressed(playbackRecording);
@@ -114,9 +115,13 @@ function setup() {
   // Create slider and label for radial graph thickness
   thicknessSlider = createSlider(1, 50, 10);
   thicknessSlider.position(20, 110 );
+  thicknessLabel = createDiv('Radial Graph Thickness');
+  thicknessLabel.position(20, 80);
+
   amplitudeSlider = createSlider(1, 200, 100);
   amplitudeSlider.position(20, 180);
-
+  ampLabel.position(20, 110);
+  ampLabel.createDiv('Amplitude');
 
 
 }
@@ -130,11 +135,6 @@ function draw() {
 
   if (soundFile.duration() > 0)
     displayRadialGraph(soundFile);
-
-  if (dragging) {
-    graphX = mouseX;
-    graphY = mouseY;
-  }
 }
 
 function startRecording() {
@@ -321,5 +321,4 @@ function handleFile(file) {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
-
 
