@@ -131,10 +131,6 @@ function draw() {
   if (soundFile.duration() > 0)
     displayRadialGraph(soundFile);
 
-  if (dragging) {
-    graphX = mouseX;
-    graphY = mouseY;
-  }
 }
 
 function startRecording() {
