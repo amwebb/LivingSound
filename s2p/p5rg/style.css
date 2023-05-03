@@ -13,9 +13,12 @@ html, body{
 }
 
 #camera--view, #camera--sensor, #camera--output{
-    z-index: -10;
+    z-index: -100;
 }
 
+.p5Canvas {
+  touch-action: none;
+}
 
 .button-container {
   display: block;

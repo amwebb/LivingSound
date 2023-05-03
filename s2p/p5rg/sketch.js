@@ -16,11 +16,62 @@ let amplitudeSlider;
 let interpolationValue = 0.5;
 let interpolationSlider;
 let graphX, graphY;
-let amp
+let amp;
+let currentScale = 1, currentAngle = 0;
+
+let transform = {
+  angle: 0,
+  scale: 1,
+  x: 0,
+  y: 0
+}
 
 function setup() {
-  imageMode(CENTER)
-  createCanvas(windowWidth, windowHeight); // create canvas
+  imageMode(CENTER);
+  angleMode(DEGREES);
+  let canvas = createCanvas(windowWidth, windowHeight); // create canvas
+  
+  interact(canvas.elt)
+  .draggable({
+    // enable inertial throwing
+    // inertia: true,
+    // keep the element within the area of it's parent
+    // modifiers: [
+    //   interact.modifiers.restrictRect({
+    //     restriction: 'parent',
+    //     endOnly: true
+    //   })
+    // ],
+    // enable autoScroll
+    // autoScroll: true,
+
+    listeners: {
+      // call this function on every dragmove event
+      move (event) {
+        transform.x += event.dx;
+        transform.y += event.dy;
+      }
+    }
+  })
+  .gesturable({
+    listeners: {
+      start (event) {
+        transform.angle -= event.angle
+      },
+      move (event) {
+        console.log("scale: " + event.scale);
+        // document.body.appendChild(new Text(event.scale))
+        currentAngle = event.angle + transform.angle
+        currentScale = event.scale * transform.scale
+      },
+      end (event) {
+        transform.angle = transform.angle + event.angle
+        transform.scale = transform.scale * event.scale
+      }
+    }
+  });
+
+
   mic = new p5.AudioIn(); // create audio input object
   mic.start(); // start audio input
   recorder = new p5.SoundRecorder(); // create sound recorder object
@@ -75,21 +126,6 @@ function setup() {
   // Append the button container to the body of the HTML document
   buttonContainer.parent(document.body);
 
-
-  // const constraints = {
-  //   video: {
-  //     facingMode: "environment", 
-  //     deviceId: 1,
-  //     width: 1920,
-  //     height: 1080
-  //   },
-  //   audio: false
-  // };
-  
-  // video = createCapture(constraints);
-  // //video.size(windowWidth, windowHeight); // modify size of video capture element
-  // video.hide();
-
   // Create slider and label for radial graph thickness
   thicknessSlider = createSlider(1, 50, 10);
   thicknessSlider.position(20, 110 );
@@ -105,35 +141,23 @@ function setup() {
 function draw() {
   clear();
   textSize(20); // set text size
+  // text(currentScale, 20, height - 40);
+  // text(currentAngle, 20, height - 80);
   fill(0); // set fill color
 
-  if (!isRecording && !isPlaying) {
-    if (graphGenerated) {
-      displayRadialGraph(soundFile);
-    }
-  } else if (isRecording) {
-    clear();
-  } else if (isPlaying) {
-    push();
-    displayRadialGraph(soundFile); // display radial graph of sound file
-    pop();
-  }
+  if (soundFile.duration() > 0)
+    displayRadialGraph(soundFile);
 
   if (dragging) {
     graphX = mouseX;
     graphY = mouseY;
   }
-
-
 }
 
-
-
-
-
 function startRecording() {
+  userStartAudio();
   if (!isRecording) { // if program is not currently recording
-    userStartAudio();
+    
     recorder.record(soundFile); // start recording into sound file object
     isRecording = true; // set recording flag to true
   }
@@ -163,22 +187,29 @@ function stopPlayback() {
 }
 
 function displayRadialGraph(sound) {
-  let waveform = sound.getPeaks(width / 2); // get waveform of sound file
-  stroke(255, 0, 0, 90); // set stroke color
-  strokeWeight(thicknessSlider.value());
-  noFill(); // remove fill color
-  beginShape(); // start shape
+  push();
+    translate(width/2+transform.x,height/2+transform.y);
+    scale(currentScale);
+    rotate(currentAngle);
+    let waveform = sound.getPeaks(width/2); // get waveform of sound file
+    stroke(255,0,0, 90); // set stroke color
+    strokeWeight(thicknessSlider.value());
+    noFill(); // remove fill color
 
-  for (let i = 0; i < waveform.length; i++) { // loop through waveform
-    let angle = map(i, 0, waveform.length, 0, TWO_PI); // map index to angle
-    let adjustedWaveform = waveform[i] * (amplitudeSlider.value() / 100); // adjust waveform value by amplitude slider
-    let radius = map(adjustedWaveform, -1, 1, 0, radiusSlider.value()); // map adjusted value to radius
-    let x = graphX + (radius) * cos(angle);
-    let y = graphY + (radius) * sin(angle);
-    curveVertex(x, y); // add vertex to shape
-  }
-  // noLoop();
-  endShape(CLOSE); // end shape and connect last vertex to first vertex
+    beginShape(); // start shape
+      for (let i = 0; i < waveform.length; i++) { // loop through waveform
+        let theta = map(i, 0, waveform.length, 0, TWO_PI); // map index to angle
+        let adjustedWaveform = waveform[i] * (amplitudeSlider.value() / 100); // adjust waveform value by amplitude slider
+        //console.log("theta: " + theta);
+        let radius = map(adjustedWaveform, -1, 1, 0, 200); // map value to radius
+        //console.log("radius: " + radius);
+        let x = (radius) * Math.cos(theta); // calculate x-coordinate based on angle and radius
+        let y = (radius) * Math.sin(theta); // calculate y-coordinate based on angle and radius
+        curveVertex(x, y); // add vertex to shape
+      }
+    endShape(CLOSE); // end shape and connect last vertex to first vertex
+  pop();
+  
 }
 
 
@@ -225,6 +256,7 @@ function display3DRadialGraph(sound) {
     // Draw the cylinder
     push();
     translate(x-200, y-200);
+    scale(currentScale);
     rotateX(HALF_PI);
     fill(0, 100, 255);
     noStroke();
@@ -303,31 +335,8 @@ function handleFile(file) {
   }
 }
 
-
-// for (let i = 0; i < waveform.length; i++) {
-//   // ...
-
-//   let x = graphX + (radius) * cos(angle);
-//   let y = graphY + (radius) * sin(angle);
-
-//   vertex(x, y);
-// }
-
-// // ...
-// }
-
-// Mouse event handling
-let dragging = false;
-
-function mousePressed() {
-let d = dist(mouseX, mouseY, graphX, graphY);
-if (d < radiusSlider.value()) {
-  dragging = true;
-  console.log(d);
-}
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
-function mouseReleased() {
-dragging = false;
-}
 
