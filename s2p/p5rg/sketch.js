@@ -13,7 +13,8 @@ let thicknessLabel; // label for radial graph thickness slider
 let radiusSlider;
 let radiusLabel
 let amplitudeSlider; 
-
+let interpolationValue = 0.5;
+let interpolationSlider;
 let graphX, graphY;
 let amp
 
@@ -96,6 +97,9 @@ function setup() {
   radiusSlider.position(20,145);
   amplitudeSlider = createSlider(1, 200, 100);
   amplitudeSlider.position(20, 180);
+
+
+
 }
 
 function draw() {
@@ -158,7 +162,6 @@ function stopPlayback() {
 
 }
 
-
 function displayRadialGraph(sound) {
   let waveform = sound.getPeaks(width / 2); // get waveform of sound file
   stroke(255, 0, 0, 90); // set stroke color
@@ -172,11 +175,12 @@ function displayRadialGraph(sound) {
     let radius = map(adjustedWaveform, -1, 1, 0, radiusSlider.value()); // map adjusted value to radius
     let x = graphX + (radius) * cos(angle);
     let y = graphY + (radius) * sin(angle);
-    vertex(x, y); // add vertex to shape
+    curveVertex(x, y); // add vertex to shape
   }
   // noLoop();
   endShape(CLOSE); // end shape and connect last vertex to first vertex
 }
+
 
 
 
@@ -326,3 +330,4 @@ if (d < radiusSlider.value()) {
 function mouseReleased() {
 dragging = false;
 }
+
