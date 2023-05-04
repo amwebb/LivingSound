@@ -3,6 +3,8 @@ html, body{
   padding: 0;
   height: 100%;
   width: 100%;
+  touch-action: none;
+  font-family: Arial;
 }
 
 #container, #camera--view, #camera--sensor, #camera--output{
@@ -16,10 +18,6 @@ html, body{
     z-index: -100;
 }
 
-.p5Canvas {
-  touch-action: none;
-}
-
 .button-container {
   display: block;
   justify-content: center;
@@ -29,7 +27,7 @@ html, body{
   top: 10px;
   min-height: 80px;
   min-width:200px;  
-  left: 20px;
+  right: 20px;
   z-index: 20;
   position: absolute;
 }
@@ -39,9 +37,67 @@ html, body{
   position: absolute;
   background-color:  rgba(223, 218, 218, .85);
   width: 200px;
-  height: 220px;
+  height: 250px;
   top: 10px;
   left: 20px;
-  padding: 5px;
+  padding: 0px 15px 0px 15px;
   flex-wrap: wrap;
+  font-size: 1.25em;
+  border-radius: 5px;
+}
+
+.label-class > input {
+  padding: 0.5em 0em 2em 0em;
+} 
+.label-class > div {
+  padding: 0.5em 0em 0.5em 0em;
+}
+
+button {
+  margin: 0px 5px 0px 5px;
+  border-radius: 5px;
+}
+
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 24px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  background: #000;
+  border-radius: 1.3px;
+  }
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
 }

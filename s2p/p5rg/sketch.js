@@ -26,6 +26,9 @@ let transform = {
   y: 0
 }
 
+const playCharacter = 'Play';
+const stopCharacter = 'Stop';
+
 function setup() {
   imageMode(CENTER);
   angleMode(DEGREES);
@@ -86,17 +89,6 @@ function setup() {
   const label = createDiv();
   label.addClass('label-class');
 
-
-
-
-  // Create the playback button and append it to the container
-  playbackButton = createButton('Playback');
-  playbackButton.mousePressed(playbackRecording);
-  playbackButton.style('font-size', '24px');
-  playbackButton.style('width', '120px');
-  playbackButton.style('height', '60px');
-  buttonContainer.child(playbackButton);
-
   // Create the export button and append it to the container
   exportButton = createButton('Export');
   exportButton.mouseClicked(exportImage);
@@ -106,31 +98,37 @@ function setup() {
   buttonContainer.child(exportButton);
 
   // Create the upload button and append it to the container
-  uploadButton = createButton('Upload');
+  uploadButton = createButton('Load');
   uploadButton.mouseClicked(uploadFile);
   uploadButton.style('font-size', '24px');
   uploadButton.style('width', '120px');
   uploadButton.style('height', '60px');
   buttonContainer.child(uploadButton);
 
-  // Append the button container to the body of the HTML document
-  buttonContainer.parent(document.body);
+  // Create the playback button and append it to the container
+  playbackButton = createButton(playCharacter);
+  playbackButton.mousePressed(playbackRecording);
+  playbackButton.style('font-size', '24px');
+  playbackButton.style('width', '120px');
+  playbackButton.style('height', '60px');
+  buttonContainer.child(playbackButton);
 
   // Create slider and label for radial graph thickness
   thicknessSlider = createSlider(1, 50, 10);
-  thicknessSlider.position(20, 110 );
-  thicknessLabel = createDiv('Stroke Width');
-  thicknessLabel.position(20, 80);
+  thicknessLabel = createDiv('Thickness');
   label.child(thicknessLabel);
   label.child(thicknessSlider);
 
   amplitudeSlider = createSlider(1, 200, 100);
-  amplitudeSlider.position(20, 180);
-  // amplitudeSlider.style('width', '50%');
   ampLabel = createDiv('Amplitude');
-  ampLabel.position(20, 160);
-  label.child(amplitudeSlider);
   label.child(ampLabel);
+  label.child(amplitudeSlider);
+
+  opacitySlider = createSlider(0,255,90);
+  opacityLabel = createDiv('Opacity');
+  label.child(opacityLabel);
+  label.child(opacitySlider);
+  
 
   // label.parent(docment.body);
 }
@@ -164,18 +162,24 @@ function stopRecording() {
 }
 
 function playbackRecording() {
-  if (!isRecording && !isPlaying && soundFile.duration() > 0) { // if program is not currently recording or playing back and sound file has recorded audio
-    soundFile.play(); // play back sound file
-    isPlaying = true; // set playing flag to true
-    
-    soundFile.onended(stopPlayback); // call stopPlayback() function when playback is complete
+  if (!isRecording && soundFile.duration() > 0) { // if program is not currently recording or playing back and sound file has recorded audio
+    if (!isPlaying) {
+      playbackButton.html(stopCharacter);
+      soundFile.play(); // play back sound file
+      isPlaying = true; // set playing flag to true
+      soundFile.onended(stopPlayback); // call stopPlayback() function when playback is complete
+    }
+    else {
+      soundFile.stop();
+      stopPlayback();
+    } 
   }
 }
 
 function stopPlayback() {
   isPlaying = false; // set playing flag to false
   graphGenerated = true;
-
+  playbackButton.html(playCharacter);
 }
 
 function displayRadialGraph(sound) {
@@ -184,7 +188,7 @@ function displayRadialGraph(sound) {
     scale(currentScale);
     rotate(currentAngle);
     let waveform = sound.getPeaks(width/2); // get waveform of sound file
-    stroke(255,0,0, 90); // set stroke color
+    stroke(255,0,0, opacitySlider.value()); // set stroke color
     strokeWeight(thicknessSlider.value());
     noFill(); // remove fill color
 
