@@ -18,12 +18,13 @@ let interpolationValue = 0.5;
 let interpolationSlider;
 let graphX, graphY;
 let currentScale = 1, currentAngle = 0;
+let currentX, currentY;
 
 let transform = {
   angle: 0,
   scale: 1,
   x: 0,
-  y: 0
+  y: 0,
 }
 
 const playCharacter = 'Play';
@@ -53,19 +54,27 @@ function setup() {
       move (event) {
         transform.x += event.dx;
         transform.y += event.dy;
+       
       }
     }
   })
   .gesturable({
     listeners: {
       start (event) {
-        transform.angle -= event.angle
+        transform.angle -= event.angle;
+        transform.prevX = event.box.x + event.box.width / 2;
+        transform.prevY = event.box.y + event.box.height / 2;
       },
       move (event) {
-        console.log("scale: " + event.scale);
-        // document.body.appendChild(new Text(event.scale))
-        currentAngle = event.angle + transform.angle
-        currentScale = event.scale * transform.scale
+        currentAngle = event.angle + transform.angle;
+        currentScale = event.scale * transform.scale;
+        let newX = event.box.x + event.box.width / 2;
+        let newY = event.box.y + event.box.height / 2;
+        transform.x += newX - transform.prevX;
+        transform.y += newY - transform.prevY;
+
+        transform.prevX = newX;
+        transform.prevY = newY;
       },
       end (event) {
         transform.angle = transform.angle + event.angle
@@ -88,6 +97,15 @@ function setup() {
 
   const label = createDiv();
   label.addClass('label-class');
+
+  // interact(label.elt)
+  // .gesturable({
+  //   listeners: {
+  //     start (event) {
+  //       event.stopImmediatePropagation();
+  //     }
+  //   }
+  // });
 
   // Create the export button and append it to the container
   exportButton = createButton('Export');
@@ -136,7 +154,8 @@ function setup() {
 function draw() {
   clear();
   textSize(20); // set text size
-  // text(currentScale, 20, height - 40);
+  // if (transform.box)
+  //   text(JSON.stringify(transform.box), 20, height - 40);
   // text(currentAngle, 20, height - 80);
   fill(0); // set fill color
 
