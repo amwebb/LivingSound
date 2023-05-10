@@ -45,7 +45,6 @@ html, body{
   flex-wrap: wrap;
   font-size: 1.25em;
   border-radius: 5px;
-  pointer-events: none;
 }
 
 .label-class > input {
