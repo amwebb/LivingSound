@@ -1,0 +1,79 @@
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    font: bold;
+    color: rgb(179, 122, 0);
+    text-decoration: none;
+}
+
+a:hover {
+    color: blue;
+}
+
+.ls-header-text {
+    font: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: green;
+}
+
+/*make it an actual header that touches the top and sides of page*/
+.header {
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: aliceblue;
+    
+    border-color: aliceblue;
+}
+
+.header > div {
+    width: 250px;
+    margin: 20px;
+    text-align: center;
+    align-self: center;
+
+    font-size: 25px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.plot-img {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100px;
+    height: 100px;
+}
+
+.rating-img {
+    width: 50px;
+    height: 50px;
+}
+
+.message {
+    margin: 5px;
+    font-size: small;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font: 400;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    background-color: darkgreen;
+}
+
+.username {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font: bold;
+    padding-left: 10px;
+}
+
+.plot {
+    background-color: rgb(179, 122, 0);
+    width: 300px;
+    margin: 10px;
+  }

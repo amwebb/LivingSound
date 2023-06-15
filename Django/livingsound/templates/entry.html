@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <title>Living Sound</title>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+
+</head>
+
+<div class="header">
+  <!-- Switch out for a logo if we have one -->
+  <div class="ls-header-text", style="flex: 0 3 250px">Living Sound</div>
+  <div><a href="{% url 'garden' %}">Garden</a></div>
+  <!--Users will make a submission through the Django Admin Page-->
+  <div><a href="{% url 'admin:index' %}">Submission</a></div>
+</div>
+
+<h1>Welcome to the Living Sound Community Garden</h1>
+
+<!-- Dynamic Content Practice-->
+<p>The garden has the following entries:</p>
+<ul>
+  {% for ent in entries %}
+    <li>{{ ent.rating }} out of 5</li>
+  {% endfor %}
+  <li>{{ p1Ents }}</li>
+</ul>
+
+<!--Flex box layout for garden columns-->
+<!-- Currently using static content but will need to be replace with dynamic -->
+<body>
+
+  <div class="flex-container">
+
+    <div class="plot">
+
+      <div class="username"><p>P1</p></div>
+      <!-- Need to specify size here for images -->
+      <div class="plot-img"><img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon" 
+        height="100px" width="100px"></div>
+      <div class="rating-img"><img src="{% static 'images/ZeroOutFive.png' %}" alt="Zero Out of Five"></div>
+      <div class="message"><p>The plant is not growing at all and I don't know what's wrong with it. 
+        I have been watering everyday but I still haven't seen any growth.</p></div>
+    </div>
+
+    <div class="plot">
+
+      <div class="username"><p>P2</p></div>
+      <div class="plot-img"><img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon"
+        height="100px" width="100px"></div>
+      <div class="rating-img"><img src="{% static 'images/ThreeOutFive.png' %}" alt="Three Out of Five"></div>
+      <div class="message"><p>My plant has been growing but not as fast as I thought it would. 
+        I think I may not be watering it enough so I plan to pay more attention to it.</p></div>
+    </div>
+    
+  </div>
+
+  <div class="flex-container">
+    <div class="plot">
+      <div class="username"><p>P3</p></div>
+      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+    </div>
+    <div class="plot">
+      <div class="username"><p>P4</p></div>
+      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+    </div>
+  </div>
+
+  <div class="flex-container">
+    <div class="plot">
+      <div class="username"><p>P5</p></div>
+      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+    </div>
+    <div class="plot">
+      <div class="username"><p>P6</p></div>
+      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+    </div>
+  </div>
+
+  <div class="flex-container">
+    <div class="plot">
+      <div class="username"><p>P7</p></div>
+      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+    </div>
+    <div class="plot">
+      <div class="username"><p>P8</p></div>
+      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+    </div>
+  </div>
+
+  <div class="flex-container">
+    <div class="plot">
+      <div class="username"><p>P9</p></div>
+      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+    </div>
+    <div class="plot">
+      <div class="username"><p>P10</p></div>
+      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+    </div>
+  </div>
+
+  <div class="flex-container">
+    <div class="plot">
+      <div class="username"><p>P11</p></div>
+      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+    </div>
+    <div class="plot">
+      <div class="username"><p>P12</p></div>
+      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+    </div>
+  </div>
+
+</body>
+
+</html>
