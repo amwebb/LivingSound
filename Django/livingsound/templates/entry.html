@@ -27,11 +27,22 @@
 
 <!-- Dynamic Content Practice-->
 <p>The garden has the following entries:</p>
+{#<ul>#}
+{#  {% for ent in entries %}#}
+{#    <li>{{ ent.rating }} out of 5</li>#}
+{#  {% endfor %}#}
+{#  <li>{{ p1Ents }}</li>#}
+{#</ul>#}
 <ul>
   {% for ent in entries %}
-    <li>{{ ent.rating }} out of 5</li>
+    <li>
+      <p>Username: {{ ent.username }}</p>
+      <p>Picture: <img src="{{ ent.picture.url }}" alt="Picture"></p>
+      <p>Sound: <audio controls><source src="{{ ent.sound.url }}" type="audio/mpeg"></audio></p>
+      <p>Rating: {{ ent.rating }} out of 5</p>
+      <p>Message: {{ ent.message }}</p>
+    </li>
   {% endfor %}
-  <li>{{ p1Ents }}</li>
 </ul>
 
 <!--Flex box layout for garden columns-->
