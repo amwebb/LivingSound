@@ -15,107 +15,181 @@
 
 </head>
 
-<div class="header">
+<!--Make admin submission page landing page-->
+
+<body>
+
+<header class="header">
   <!-- Switch out for a logo if we have one -->
-  <div class="ls-header-text", style="flex: 0 3 250px">Living Sound</div>
+  <div class="ls-header-text", style="flex: 0 3 200px;">Living Sound</div>
   <div><a href="{% url 'garden' %}">Garden</a></div>
   <!--Users will make a submission through the Django Admin Page-->
-  <div><a href="{% url 'admin:index' %}">Submission</a></div>
-</div>
+  <div><a href="{% url 'admin:index' %}">Submit Entry</a></div>
+</header>
 
-<h1>Welcome to the Living Sound Community Garden</h1>
+<h1>Welcome to the Living Sound Community Garden!</h1>
 
-<!-- Dynamic Content Practice-->
-<p>The garden has the following entries:</p>
-<ul>
-  {% for ent in entries %}
-    <li>{{ ent.rating }} out of 5</li>
-  {% endfor %}
-  <li>{{ p1Ents }}</li>
-</ul>
 
 <!--Flex box layout for garden columns-->
-<!-- Currently using static content but will need to be replace with dynamic -->
-<body>
+<!--add sound if time-->
 
   <div class="flex-container">
 
+    <!--P1-->
     <div class="plot">
 
-      <div class="username"><p>P1</p></div>
+      <div class="username"><p><strong>P1</strong></p>
+        <p><small>{{ p1Ent.timestamp }}</small></p></div>
       <!-- Need to specify size here for images -->
-      <div class="plot-img"><img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon" 
-        height="100px" width="100px"></div>
-      <div class="rating-img"><img src="{% static 'images/ZeroOutFive.png' %}" alt="Zero Out of Five"></div>
-      <div class="message"><p>The plant is not growing at all and I don't know what's wrong with it. 
-        I have been watering everyday but I still haven't seen any growth.</p></div>
+      <div class="plot-img"><img src="{{ p1Ent.picture.url }}" alt="P1 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p1Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;"> {{ p1Ent.message }} </p></div>
     </div>
 
+    <!--P2-->
     <div class="plot">
 
-      <div class="username"><p>P2</p></div>
-      <div class="plot-img"><img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon"
-        height="100px" width="100px"></div>
-      <div class="rating-img"><img src="{% static 'images/ThreeOutFive.png' %}" alt="Three Out of Five"></div>
-      <div class="message"><p>My plant has been growing but not as fast as I thought it would. 
-        I think I may not be watering it enough so I plan to pay more attention to it.</p></div>
+      <div class="username"><p><strong>P2</strong></p>
+        <p><small>{{ p2Ent.timestamp }}</small></p></div>
+      <div class="plot-img"><img src="{{ p2Ent.picture.url }}" alt="P2 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p2Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;"> {{ p2Ent.message }} </p></div>
     </div>
     
   </div>
 
   <div class="flex-container">
+
+    <!--P3-->
     <div class="plot">
-      <div class="username"><p>P3</p></div>
-      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+
+      <div class="username"><p><strong>P3</strong></p>
+        <p><small>{{ p3Ent.timestamp }}</small></p></div>
+      <div class="plot-img"><img src="{{ p3Ent.picture.url }}" alt="P3 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p3Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;"> {{ p3Ent.message }} </p></div>
+
     </div>
+
+    <!--P4-->
     <div class="plot">
-      <div class="username"><p>P4</p></div>
-      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+
+      <div class="username"><p><strong>P4</strong></p>
+        <p><small>{{ p4Ent.timestamp }}</small></p></div>
+      <div class="plot-img"><img src="{{ p4Ent.picture.url }}" alt="P4 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p4Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;">{{ p4Ent.message }}</p></div>
+
     </div>
+
   </div>
 
   <div class="flex-container">
+
+    <!--P5-->
     <div class="plot">
-      <div class="username"><p>P5</p></div>
-      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+      <div class="username"><p><strong>P5</strong></p>
+        <p><small>{{ p5Ent.timestamp }}</small></p></div>
+      <div class="plot-img"><img src="{{ p5Ent.picture.url }}" alt="P5 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p5Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;">{{ p5Ent.message }}</p></div>
+
     </div>
+
+    <!--P6-->
     <div class="plot">
-      <div class="username"><p>P6</p></div>
-      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+      <div class="username"><p><strong>P6</strong></p>
+        <p><small>{{ p6Ent.timestamp }}</small></p></div>
+      <div class="plot-img"><img src="{{ p6Ent.picture.url }}" alt="P6 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p6Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;">{{ p6Ent.message }}</p></div>
+
     </div>
+
   </div>
 
   <div class="flex-container">
+
+    <!--P7-->
     <div class="plot">
-      <div class="username"><p>P7</p></div>
-      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+      <div class="username"><p><strong>P7</strong></p>
+        <p><small>{{ p7Ent.timestamp }}</small></p></div>
+      <div class="plot-img"><img src="{{ p7Ent.picture.url }}" alt="P7 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p7Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;">{{ p7Ent.message }}</p></div>
+
     </div>
+
+    <!--P8-->
     <div class="plot">
-      <div class="username"><p>P8</p></div>
-      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+      <div class="username"><p><strong>P8</strong></p>
+        <p><small>{{ p8Ent.timestamp }}</small></p></div>
+      <div class="plot-img"><img src="{{ p8Ent.picture.url }}" alt="P8 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p8Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;">{{ p8Ent.message }}</p></div>
+
     </div>
+
   </div>
 
   <div class="flex-container">
+
+    <!--P9-->
     <div class="plot">
-      <div class="username"><p>P9</p></div>
-      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+      <div class="username"><p><strong>P9</strong></p>
+        <p><small>{{ p9Ent.timestamp }}</small></p></div>
+      <div class="plot-img"><img src="{{ p9Ent.picture.url }}" alt="P9 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p9Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;">{{ p9Ent.message }}</p></div>
+
     </div>
+
+    <!--P10-->
     <div class="plot">
-      <div class="username"><p>P10</p></div>
-      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+      <div class="username"><p><strong>P10</strong></p>
+        <p><small>{{ p10Ent.timestamp }}</small></p></div>
+      <div class="plot-img"><img src="{{ p10Ent.picture.url }}" alt="P10 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p10Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;">{{ p10Ent.message }}</p></div>
+
     </div>
+
   </div>
 
   <div class="flex-container">
+
+    <!--P11-->
     <div class="plot">
-      <div class="username"><p>P11</p></div>
-      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+      <div class="username"><p><strong>P11</strong></p>
+        <p><small>{{ p11Ent.timestamp }}</small></p></div>
+      <div class="plot-img"><img src="{{ p11Ent.picture.url }}" alt="P11 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p11Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;">{{ p11Ent.message }}</p></div>
+
     </div>
+
+    <!--P12-->
     <div class="plot">
-      <div class="username"><p>P12</p></div>
-      <img src="{% static 'images/GrayPhotoIcon.jpg' %}" alt="Gray Photo Icon">
+      <div class="username"><p><strong>P12</strong></p>
+        <p><small>{{ p12Ent.timestamp }}</small></p></div>
+      <div class="plot-img"><img src="{{ p12Ent.picture.url }}" alt="P12 Plant Update Photo" 
+        height="150px" width="150px"></div>
+      <div class="rating-img"><img {{ p12Ent.ratingPic }} height="75px" width="75px"></div>
+      <div class="message"><p style="font-size: 15px;">{{ p12Ent.message }}</p></div>
+
     </div>
+
   </div>
 
 </body>

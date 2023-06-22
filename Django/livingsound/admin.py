@@ -5,4 +5,5 @@ from .models import GardenEntry
 admin.site.register(GardenEntry)
 
 #admin login: username: admin pass: FakePass
-#p1 login username: p1 pass: FakePass1
+#p1 login username: p1 pass: Fakep1Pass
+#p2 Fakep2Pass
