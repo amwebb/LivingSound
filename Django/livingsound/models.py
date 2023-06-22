@@ -60,6 +60,5 @@ class GardenEntry(models.Model):
         else:
             return 'src=static/images/0Out5.png alt=Zero'
 
-#Query set for all entries
-#All_Entries = GardenEntry.objects.all()
-
+# Query set for all entries
+# All_Entries = GardenEntry.objects.all()

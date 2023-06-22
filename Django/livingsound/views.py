@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 
 # Create your views here.
@@ -5,9 +6,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import GardenEntry
 
 def garden(request):
-    """Filter each username. find the most recent entry by that username. 
-    (model.objects.all().orberby(-datetime) and pick the newest one)
-    add it to the context list as 'username'Ent. use the values in each 
+    """Filter each username. find the most recent entry by that username.
+    add it to the context list as 'username'Ent. use the values in each
     username to fill in info in entry.html"""
 
     allEnts = GardenEntry.objects.all()
