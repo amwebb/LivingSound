@@ -26,6 +26,10 @@
 </header>
 
 <h1>Welcome to the <br> <larger>Living Sound Garden!</larger></h1>
+<p>{{ current_user }}</p>
+{{% for ent in allEnts %}}
+  <p>{{ ent }}</p>
+{{% endfor %}}
 
 <!--Flex box layout for garden columns-->
 <!--add sound if time-->

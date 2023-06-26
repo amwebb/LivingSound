@@ -1,18 +1,39 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+#from django.utils.decorators import method_decorator
+#from django.views.generic.edit import CreateView
 
 # Create your views here.
 from django.core.exceptions import ObjectDoesNotExist
 from .models import GardenEntry
 
+"""
+class userSubmit(CreateView):
+    model = GardenEntry
+    fields = ['picture', 'sound', 'rating', 'message']
+
+    @method_decorator(login_required)
+    def form_valid(self, request, obj, form, change):
+
+        form.instance.username = self.request.user
+        return super().form_valid(form)
+"""
 
 def garden(request):
     """Filter each username. find the most recent entry by that username.
     add it to the context list as 'username'Ent. use the values in each
     username to fill in info in entry.html"""
 
+
     allEnts = GardenEntry.objects.all().values()
+    if str(request.user.username) == 'p1':
+        current_user ='true'
+    else:
+        current_user = 'false'
+
+    currentUser = request.user.username
+
 
     #admin account has username id 1
     try:
@@ -90,6 +111,7 @@ def garden(request):
         'p11Ent': p11Ent,
         'p12Ent': p12Ent,
         'allEnts': allEnts,
+        'current_user': current_user
         }
 
     return render(request, 'entry.html', context=context)

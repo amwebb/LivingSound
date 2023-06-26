@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
-import uuid
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -11,9 +10,10 @@ class GardenEntry(models.Model):
 
     # Fields
     #username = models.CharField(max_length=20, help_text='Enter username')
+    #pip install django-currentuser
 
     #I am not able to migrate in the powershell because it is saying the primary key has an invalid foreign key
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    #username = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
 
     # Probably not needed - get rid of
     #UserEntryNum = models.CharField(max_length=20,
@@ -34,6 +34,8 @@ class GardenEntry(models.Model):
     message = models.TextField(max_length=300, help_text='Enter the message')
 
     timestamp = models.DateTimeField(auto_now_add=True, null=True)
+
+    username = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     
 
     # Methods
