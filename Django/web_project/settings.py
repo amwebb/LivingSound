@@ -78,12 +78,18 @@ WSGI_APPLICATION = 'web_project.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "postgres",
         "USER": "django",
-        "PASSWORD": "",
-        "HOST": "127.0.0.1",
+        "PASSWORD": "django",
+        "HOST": "35.232.143.245",
         "PORT": "5432",
+        "OPTIONS": {
+            "sslmode": 'verify-ca',
+            "sslrootcert": os.path.join(BASE_DIR, 'server-ca.pem'),
+            "sslcert": os.path.join(BASE_DIR, 'client-cert.pem'),
+            "sslkey": os.path.join(BASE_DIR, 'client-key.pem'),
+        }
     }
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
