@@ -227,4 +227,6 @@ GS_DEFAULT_ACL = "publicRead"
 # [END cloudrun_django_static_config]
 
 MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
+
+LOGIN_REDIRECT_URL = '/'
      
