@@ -27,6 +27,10 @@ SECRET_KEY = 'django-insecure-^71k_pf3-l&2%h!(hjn$ajj3#s74d+u!=xc+w@y8%qk_!xq9zg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# propoerties for selecting which DB to use
+DB = "local" #"postgres"
+PROXY = True
+
 ALLOWED_HOSTS = ['*']
 
 
@@ -76,26 +80,37 @@ WSGI_APPLICATION = 'web_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "postgres",
-        "USER": "django",
-        "PASSWORD": "django",
-        "HOST": "35.232.143.245",
-        "PORT": "5432",
-        "OPTIONS": {
+if (DB == "postgres"):
+    if (PROXY):
+        DB_HOST = "127.0.0.1"
+        OPTIONS = {}
+    else:
+        DB_HOST = "/cloudsql/livingsound:us-central1:livingsound-db"
+        OPTIONS = {
             "sslmode": 'verify-ca',
             "sslrootcert": os.path.join(BASE_DIR, 'server-ca.pem'),
             "sslcert": os.path.join(BASE_DIR, 'client-cert.pem'),
             "sslkey": os.path.join(BASE_DIR, 'client-key.pem'),
         }
+
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "postgres",
+            "USER": "django",
+            "PASSWORD": "django",
+            "HOST": DB_HOST,
+            "PORT": "5432",
+            "OPTIONS": OPTIONS
+        }
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

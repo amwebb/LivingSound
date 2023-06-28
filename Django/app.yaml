@@ -3,7 +3,11 @@ runtime: python311 # or another supported version
 entrypoint: gunicorn -b :$PORT web_project.wsgi
 
 env_variables:
-  APPENGINE_URL: livingsound:us-central1:livingsound-db
+  APPENGINE_URL: https://livingsound.us-central1.r.appspot.com
+
+resources:
+  cpu: 2
+  memory_gb: 10
 
 handlers:
 - url: /static
