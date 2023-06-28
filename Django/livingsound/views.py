@@ -7,8 +7,12 @@ from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from .models import GardenEntry
 from .forms import GardenForm
+# Decorator for Login Required
+from django.contrib.auth.decorators import login_required
 
 
+
+@login_required(login_url='/admin/login/')
 def garden(request):
     """Filter each username. find the most recent entry by that username.
     add it to the context list as 'username'Ent. use the values in each
@@ -19,7 +23,7 @@ def garden(request):
     """
     allEnts = GardenEntry.objects.all().values()
     if str(request.user.username) == 'p1':
-        current_user ='true'
+        current_user = 'true'
     else:
         current_user = 'false'
 
@@ -57,7 +61,7 @@ def garden(request):
         p6Ent = GardenEntry.objects.filter(username=7).latest('timestamp')
     except ObjectDoesNotExist:
         p6Ent = None
-    
+
     try:
         p7Ent = GardenEntry.objects.filter(username=8).latest('timestamp')
     except ObjectDoesNotExist:
@@ -87,7 +91,7 @@ def garden(request):
         p12Ent = GardenEntry.objects.filter(username=13).latest('timestamp')
     except ObjectDoesNotExist:
         p12Ent = None
-    
+
     context = {
         'p1Ent': p1Ent,
         'p2Ent': p2Ent,
