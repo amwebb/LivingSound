@@ -105,3 +105,11 @@ h1 {
     border-style: solid;
     border-width: 5px;
   }
+
+.submit-form {
+    background-color: rgb(255, 245, 139);
+    align-self: center;
+    margin: 20px 0px;
+    width: 400px;
+    padding: 5px;
+}

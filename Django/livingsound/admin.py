@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import GardenEntry
 
+"""
 class GardenAdmin(admin.ModelAdmin):
     readonly_fields = ['username']
     fieldsets = [
@@ -15,9 +16,10 @@ class GardenAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.username = request.user
         obj.save()
-
+"""
+        
 # Register your models here.
-admin.site.register(GardenEntry, GardenAdmin)
+admin.site.register(GardenEntry)
 
 #admin login: username: admin pass: FakePass
 #p1 login username: p1 pass: Fake1Pass

@@ -1,24 +1,13 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-#from django.utils.decorators import method_decorator
-#from django.views.generic.edit import CreateView
+from django.shortcuts import render, redirect
+
+
 
 # Create your views here.
 from django.core.exceptions import ObjectDoesNotExist
 from .models import GardenEntry
+from .forms import GardenForm
 
-"""
-class userSubmit(CreateView):
-    model = GardenEntry
-    fields = ['picture', 'sound', 'rating', 'message']
-
-    @method_decorator(login_required)
-    def form_valid(self, request, obj, form, change):
-
-        form.instance.username = self.request.user
-        return super().form_valid(form)
-"""
 
 def garden(request):
     """Filter each username. find the most recent entry by that username.
@@ -26,6 +15,8 @@ def garden(request):
     username to fill in info in entry.html"""
 
 
+    #Testing for getting current user - can delete once website is done
+    """
     allEnts = GardenEntry.objects.all().values()
     if str(request.user.username) == 'p1':
         current_user ='true'
@@ -33,7 +24,7 @@ def garden(request):
         current_user = 'false'
 
     currentUser = request.user.username
-
+    """
 
     #admin account has username id 1
     try:
@@ -110,15 +101,25 @@ def garden(request):
         'p10Ent': p10Ent,
         'p11Ent': p11Ent,
         'p12Ent': p12Ent,
-        'allEnts': allEnts,
-        'current_user': current_user
+        #'allEnts': allEnts,
+        #'current_user': current_user
         }
 
     return render(request, 'entry.html', context=context)
 
-#Is this needed?
-def latest_entry(request, username):
-    latest_entry = GardenEntry.objects.all().filter(username=username).latest('timestamp')
-    return render(request, 'latest_entry.html', {'entry': latest_entry})
 
+def submission(request):
+    """This saves the garden form and collects the username"""
+    if request.method == "POST":
+        form = GardenForm(request.POST, request.FILES)
+        if form.is_valid():
+            GardenEntry = form.save(commit=False)
+            GardenEntry.username = request.user
+            GardenEntry.save()
+            #This is supposed to redirect to avoid double submission but hasn't worked yet
+            #return redirect("livingsound:submission")
+        else: 
+            print("This form is not valid")
+    form = GardenForm()
+    return render(request, 'livingsound/submission.html', {"form": form})
 

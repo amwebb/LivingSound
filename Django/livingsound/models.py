@@ -9,18 +9,10 @@ class GardenEntry(models.Model):
     """A typical class defining a model, derived from the Model class."""
 
     # Fields
-    #username = models.CharField(max_length=20, help_text='Enter username')
-    #pip install django-currentuser
-
-    #I am not able to migrate in the powershell because it is saying the primary key has an invalid foreign key
-    #username = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-
-    # Probably not needed - get rid of
-    #UserEntryNum = models.CharField(max_length=20,
-                                    #help_text='Enter username and entry number (ex. P1Ent1 for user P1 first entry)')
 
     # pip install pillow
-    # upload pictures and sounds to a media folder
+    # Pictures and sound are being uploaded to media folder
+    #assign username and date as name
     picture = models.ImageField(upload_to='images/', null=True, blank=True, help_text='Upload an update picture of your plant')
 
     #Have max length (30 secs?)
@@ -31,8 +23,9 @@ class GardenEntry(models.Model):
                                  help_text='Enter the rating of the quality of your plant (out of 5).' + 
                                  '\n| 1 - very poor (not doing well) | \n2 - poor | \n3 - no change | \n4 - good | \n5 - very good (doing very well)')
 
-    message = models.TextField(max_length=300, help_text='Enter the message')
+    message = models.CharField(max_length=300, help_text='Enter the message')
 
+    #timestamp is used to find the newest entry
     timestamp = models.DateTimeField(auto_now_add=True, null=True)
 
     username = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
@@ -44,10 +37,12 @@ class GardenEntry(models.Model):
         return reverse('model-detail-view', args=[str(self.id)])
 
     def __str__(self):
-        """String for representing the MyModelName object (in Admin site etc.)."""
-        return f'{self.timestamp} ({self.username})'
+        """String for representing the MyModelName object (in Admin site etc.). 
+        Name of each entry is username and date."""
+        return f'{self.username} ({self.timestamp})'
     
     def ratingPic(self):
+        """Returns the picture that corresponds with the rating integer"""
         if self.rating == 1:
             return 'src=static/images/1Out5.png alt=One'
         elif self.rating == 2:
@@ -60,6 +55,3 @@ class GardenEntry(models.Model):
             return 'src=static/images/5Out5.png alt=Five'
         else:
             return 'src=static/images/0Out5.png alt=Zero'
-
-# Query set for all entries
-# All_Entries = GardenEntry.objects.all()

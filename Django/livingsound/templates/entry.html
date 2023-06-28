@@ -1,35 +1,12 @@
-<!DOCTYPE html>
+{% extends "base_generic.html" %}
 
-<html lang="en">
+{% block content %}
 
-<head>
-
-  <title>Living Sound</title>
-
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- Add additional CSS in static file -->
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-
-</head>
-
-<body>
-
-<header class="header">
-  <!-- Switch out for a logo if we have one -->
-  <div class="ls-header-text", style="flex: 0 3 200px; font-weight: bold;">Living Sound</div>
-  <div><a href="{% url 'garden' %}">Garden</a></div>
-  <!--Users will make a submission through the Django Admin Page-->
-  <div><a href="{% url 'admin:index' %}">Submit Entry</a></div>
-</header>
-
-<h1>Welcome to the <br> <larger>Living Sound Garden!</larger></h1>
-<p>{{ current_user }}</p>
-{{% for ent in allEnts %}}
-  <p>{{ ent }}</p>
-{{% endfor %}}
+  <h1>Welcome to the <br> <larger>Living Sound Garden!</larger></h1>
+  <!-- Tests for current user and entries to make sure they were submitting correctly
+  <p>{{ current_user }}</p>
+  <p>{{ allEnts }}</p>
+  -->
 
 <!--Flex box layout for garden columns-->
 <!--add sound if time-->
@@ -38,7 +15,8 @@
 
     <!--P1-->
     <div class="plot">
-
+      <!--Getting the username, date, progress image, rating image, and message 
+        for each user and displaying it in a predetermined order-->
       <div class="username"><p><strong>P1</strong></p>
         <p><small>{{ p1Ent.timestamp }}</small></p></div>
       <!-- Need to specify size here for images -->
@@ -193,6 +171,4 @@
 
   </div>
 
-</body>
-
-</html>
+{% endblock %}

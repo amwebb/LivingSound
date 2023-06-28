@@ -1,0 +1,37 @@
+<!--This is the base html that has aspects of the website that are needed on every page-->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    {% block title %}
+      <title>Living Sound</title>
+    {% endblock %}
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+
+  </head>
+
+  <body>
+    {% block header %}
+    <header class="header">
+        <!-- Switch out for a logo if we have one -->
+        <div class="ls-header-text", style="flex: 0 3 200px; font-weight: bold;">Living Sound</div>
+        <div><a href="{% url 'garden' %}">Garden</a></div>
+        <!--Users will make a submission through the Django Admin Page-->
+        <div><a href="{% url 'submission' %}">Submit Entry</a></div>
+      </header>
+    {% endblock %}
+    {% block content %}
+      <!-- default content text (typically empty) -->
+    {% endblock %}
+
+  </body>
+  
+</html>
