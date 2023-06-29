@@ -4,6 +4,10 @@
     margin: 0;
 }
 
+html {
+    background-color: rgb(72, 160, 72);
+}
+
 a {
     color: rgb(73, 35, 0);
     text-decoration: none;
@@ -45,9 +49,6 @@ h1 {
     text-align: center;
     padding-top: 40px; 
     padding-bottom: 30px;
-    background-color: rgb(46, 175, 46);
-    border-color: rgb(46, 175, 46);
-    border-style: solid;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     color: rgb(5, 47, 138);
 }
@@ -83,9 +84,6 @@ h1 {
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
-    background-color: rgb(46, 175, 46);
-    border-color: rgb(46, 175, 46);
-    border-style: solid;
 }
 
 
@@ -148,7 +146,6 @@ h1 {
 
 .submit-text {
     text-align: center;
-    background-color: rgb(46, 175, 46);
     font-size: large;
     font-weight: bold;
     color: rgb(73, 35, 0);
