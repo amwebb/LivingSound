@@ -22,7 +22,7 @@ a:hover {
 .header {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-wrap: nowrap;
     background-color: rgb(216, 169, 67);
@@ -88,6 +88,8 @@ h1 {
     border-style: solid;
 }
 
+
+
 .two-column-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -95,6 +97,20 @@ h1 {
     justify-items: center;
     align-content: space-evenly;
     align-items: center;
+    max-width: 1000px;
+    margin: auto;
+}
+
+@media screen and (min-width: 700px) {
+    .two-column-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .two-column-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
 .username {
