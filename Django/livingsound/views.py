@@ -10,7 +10,8 @@ from .forms import GardenForm
 # Decorator for Login Required
 from django.contrib.auth.decorators import login_required
 
-
+MIN_USER_ID = 2
+NUM_USERS = 11
 
 @login_required(login_url='/admin/login/')
 def garden(request):
@@ -93,7 +94,7 @@ def garden(request):
     #     p12Ent = None
 
     entries = []
-    for i in range(2,13):
+    for i in range(MIN_USER_ID,MIN_USER_ID+NUM_USERS):
         try:
             entry = GardenEntry.objects.filter(username=i).latest('timestamp')
         except ObjectDoesNotExist:
