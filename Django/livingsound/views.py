@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 MIN_USER_ID = 2
 NUM_USERS = 11
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/accounts/login/')
 def garden(request):
     """Filter each username. find the most recent entry by that username.
     add it to the context list as 'username'Ent. use the values in each
@@ -121,7 +121,7 @@ def garden(request):
 
     return render(request, 'entry.html', context=context)
 
-
+@login_required(login_url='/accounts/login/')
 def submission(request):
     """This saves the garden form and collects the username"""
     if request.method == "POST":
