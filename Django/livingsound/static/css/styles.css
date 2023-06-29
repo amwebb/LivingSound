@@ -169,6 +169,25 @@ h1 {
     padding: 5px;
 }
 
+.success-text {
+    text-align: center;
+    align-self: center;
+    padding: 5px;
+    font-size: medium;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.success-button {
+    height:50px; 
+    width:100px; 
+    background-color: rgb(255, 245, 139);
+    border-color: rgb(73, 35, 0);
+    border-style: solid; 
+    border-radius: 5px;
+    font-weight: bold;
+}
+
 .name-rating-container {
     min-height: 100px;
 }
