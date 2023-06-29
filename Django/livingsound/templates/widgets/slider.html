@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="moji">😐</div>
+    <div class="slider">
+      <span>Very Poor</span>
+      <input name="{{ widget.name }}" id="{{ widget.name }}" type="range" value="{{ widget.value }}" min="1" max="5" step="1">
+      <span>Very Good</span>
+    </div>
+</div>
+
+<script>
+    const range = document.querySelector('#{{ widget.name }}');
+    const div = document.querySelector('.moji');
+    const mojis = ['','😩','☹️','😐','🙂','😄']; //'🤢','😑','😠','😡',,'😤','💩'];
+
+    range.addEventListener('input', (e) => {
+    let rangeValue = e.target.value;
+    div.textContent = mojis[rangeValue];
+    });
+</script>
+
+<style>
+    .container {
+        width: 300px;
+        margin: auto;
+    }
+    .moji {
+        font-size: 8em;
+        text-align: center;
+    }
+    input {
+        width: 100%;
+        margin: 0 10px;
+    }
+    .slider {
+        display: flex;
+        justify-content: space-between;
+    }
+    span {
+        font-weight: bold;
+        color: tomato;
+    }
+    span:last-child {
+        color: #1b9941;
+    }
+</style>
