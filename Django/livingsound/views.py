@@ -101,9 +101,10 @@ def garden(request):
     for user in non_admin_users:
         try:
             entry = GardenEntry.objects.filter(username=user).latest('timestamp')
+            entries.append(entry)
         except ObjectDoesNotExist:
             entry = None
-        entries.append(entry)
+        
 
     entries.reverse()
 
