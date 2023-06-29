@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from datetime import datetime
 
@@ -11,10 +12,10 @@ class GardenEntry(models.Model):
 
     #Directory for files to go to specific folders
     def user_directory_path_img(instance, filename):
-        return "user_{0}/images/{1}_{2}".format(instance.username, datetime.now(), filename)
+        return "uploads/{0}/images/{1}_{2}".format(instance.username, datetime.now(), filename)
     
     def user_directory_path_sound(instance, filename):
-        return "user_{0}/sound/{1}_{2}".format(instance.username, datetime.now(), filename)
+        return "uploads/{0}/sound/{1}_{2}".format(instance.username, datetime.now(), filename)
 
     # Fields
 
@@ -22,6 +23,7 @@ class GardenEntry(models.Model):
     # Pictures and sound are being uploaded to media folder
     #assign username and date as name
     #user directory - username/imagesorsound/timestamp+filename
+
     picture = models.ImageField(upload_to=user_directory_path_img, null=True, blank=True, help_text='Upload an update picture of your plant')
 
     sound = models.FileField(upload_to=user_directory_path_sound, null=True, blank=True, help_text='Upload a sound file')
@@ -37,7 +39,7 @@ class GardenEntry(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, null=True)
 
     username = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-
+    # groups = models.ForeignKey(Group, related_name='groups', on_delete=models.DO_NOTHING)
 
     # Methods
     def get_absolute_url(self):

@@ -1,5 +1,6 @@
 from django import forms
 from .models import GardenEntry
+from django.forms import Textarea
 
 class GardenForm(forms.ModelForm):
 
@@ -17,4 +18,7 @@ class GardenForm(forms.ModelForm):
         model = GardenEntry
         fields = ['picture', 'sound', 'rating', 'message']
         exclude = ("username", )
+        widgets = {
+          'message': Textarea(attrs={'rows':10, 'cols':45}),
+        }
         
