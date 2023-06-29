@@ -2,7 +2,7 @@
 
 {% block content %}
 
-  <h1>Welcome to the <br> <larger>Living Sound Garden!</larger></h1>
+  <!-- <h1>Welcome to the <br> <larger>Living Sound Garden!</larger></h1> -->
   <!-- Tests for current user and entries to make sure they were submitting correctly
   <p>{{ current_user }}</p>
   <p>{{ allEnts }}</p>
@@ -11,163 +11,21 @@
 <!--Flex box layout for garden columns-->
 <!--add sound if time-->
 
-  <div class="flex-container">
+  <div class="two-column-grid">
 
-    <!--P1-->
-    <div class="plot">
-      <!--Getting the username, date, progress image, rating image, and message 
-        for each user and displaying it in a predetermined order-->
-      <div class="username"><p><strong>P1</strong></p>
-        <p><small>{{ p1Ent.timestamp }}</small></p></div>
-      <!-- Need to specify size here for images -->
-      <div class="plot-img"><img src="{{ p1Ent.picture.url }}" alt="P1 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p1Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;"> {{ p1Ent.message }} </p></div>
-    </div>
-
-    <!--P2-->
-    <div class="plot">
-
-      <div class="username"><p><strong>P2</strong></p>
-        <p><small>{{ p2Ent.timestamp }}</small></p></div>
-      <div class="plot-img"><img src="{{ p2Ent.picture.url }}" alt="P2 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p2Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;"> {{ p2Ent.message }} </p></div>
-    </div>
-    
-  </div>
-
-  <div class="flex-container">
-
-    <!--P3-->
-    <div class="plot">
-
-      <div class="username"><p><strong>P3</strong></p>
-        <p><small>{{ p3Ent.timestamp }}</small></p></div>
-      <div class="plot-img"><img src="{{ p3Ent.picture.url }}" alt="P3 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p3Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;"> {{ p3Ent.message }} </p></div>
-
-    </div>
-
-    <!--P4-->
-    <div class="plot">
-
-      <div class="username"><p><strong>P4</strong></p>
-        <p><small>{{ p4Ent.timestamp }}</small></p></div>
-      <div class="plot-img"><img src="{{ p4Ent.picture.url }}" alt="P4 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p4Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;">{{ p4Ent.message }}</p></div>
-
-    </div>
-
-  </div>
-
-  <div class="flex-container">
-
-    <!--P5-->
-    <div class="plot">
-      <div class="username"><p><strong>P5</strong></p>
-        <p><small>{{ p5Ent.timestamp }}</small></p></div>
-      <div class="plot-img"><img src="{{ p5Ent.picture.url }}" alt="P5 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p5Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;">{{ p5Ent.message }}</p></div>
-
-    </div>
-
-    <!--P6-->
-    <div class="plot">
-      <div class="username"><p><strong>P6</strong></p>
-        <p><small>{{ p6Ent.timestamp }}</small></p></div>
-      <div class="plot-img"><img src="{{ p6Ent.picture.url }}" alt="P6 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p6Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;">{{ p6Ent.message }}</p></div>
-
-    </div>
-
-  </div>
-
-  <div class="flex-container">
-
-    <!--P7-->
-    <div class="plot">
-      <div class="username"><p><strong>P7</strong></p>
-        <p><small>{{ p7Ent.timestamp }}</small></p></div>
-      <div class="plot-img"><img src="{{ p7Ent.picture.url }}" alt="P7 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p7Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;">{{ p7Ent.message }}</p></div>
-
-    </div>
-
-    <!--P8-->
-    <div class="plot">
-      <div class="username"><p><strong>P8</strong></p>
-        <p><small>{{ p8Ent.timestamp }}</small></p></div>
-      <div class="plot-img"><img src="{{ p8Ent.picture.url }}" alt="P8 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p8Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;">{{ p8Ent.message }}</p></div>
-
-    </div>
-
-  </div>
-
-  <div class="flex-container">
-
-    <!--P9-->
-    <div class="plot">
-      <div class="username"><p><strong>P9</strong></p>
-        <p><small>{{ p9Ent.timestamp }}</small></p></div>
-      <div class="plot-img"><img src="{{ p9Ent.picture.url }}" alt="P9 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p9Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;">{{ p9Ent.message }}</p></div>
-
-    </div>
-
-    <!--P10-->
-    <div class="plot">
-      <div class="username"><p><strong>P10</strong></p>
-        <p><small>{{ p10Ent.timestamp }}</small></p></div>
-      <div class="plot-img"><img src="{{ p10Ent.picture.url }}" alt="P10 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p10Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;">{{ p10Ent.message }}</p></div>
-
-    </div>
-
-  </div>
-
-  <div class="flex-container">
-
-    <!--P11-->
-    <div class="plot">
-      <div class="username"><p><strong>P11</strong></p>
-        <p><small>{{ p11Ent.timestamp }}</small></p></div>
-      <div class="plot-img"><img src="{{ p11Ent.picture.url }}" alt="P11 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p11Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;">{{ p11Ent.message }}</p></div>
-
-    </div>
-
-    <!--P12-->
-    <div class="plot">
-      <div class="username"><p><strong>P12</strong></p>
-        <p><small>{{ p12Ent.timestamp }}</small></p></div>
-      <div class="plot-img"><img src="{{ p12Ent.picture.url }}" alt="P12 Plant Update Photo" 
-        height="150px" width="150px"></div>
-      <div class="rating-img"><img {{ p12Ent.ratingPic }} height="75px" width="75px"></div>
-      <div class="message"><p style="font-size: 15px;">{{ p12Ent.message }}</p></div>
-
-    </div>
+    {% for entry in data %}
+      <div class="plot">
+        <!--Getting the username, date, progress image, rating image, and message 
+          for each user and displaying it in a predetermined order-->
+        <div class="username"><p><strong>{{ entry.username }}</strong></p>
+          <p><small>{{ entry.timestamp }}</small></p></div>
+        <!-- Need to specify size here for images -->
+        <div class="plot-img"><img src="{{ entry.picture.url }}" alt="P1 Plant Update Photo" 
+          height="150px" width="150px"></div>
+        <div class="rating-img"><img {{ entry.ratingPic }} height="75px" width="75px"></div>
+        <div class="message"><p style="font-size: 15px;"> {{ entry.message }} </p></div>
+      </div>
+    {% endfor %}
 
   </div>
 
