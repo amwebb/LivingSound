@@ -2,21 +2,29 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from datetime import datetime
 
 
 # create default entries
 class GardenEntry(models.Model):
     """A typical class defining a model, derived from the Model class."""
 
+    #Directory for files to go to specific folders
+    def user_directory_path_img(instance, filename):
+        return "user_{0}/images/{1}_{2}".format(instance.username, datetime.now(), filename)
+    
+    def user_directory_path_sound(instance, filename):
+        return "user_{0}/sound/{1}_{2}".format(instance.username, datetime.now(), filename)
+
     # Fields
 
     # pip install pillow
     # Pictures and sound are being uploaded to media folder
     #assign username and date as name
-    picture = models.ImageField(upload_to='images/', null=True, blank=True, help_text='Upload an update picture of your plant')
+    #user directory - username/imagesorsound/timestamp+filename
+    picture = models.ImageField(upload_to=user_directory_path_img, null=True, blank=True, help_text='Upload an update picture of your plant')
 
-    #Have max length (30 secs?)
-    sound = models.FileField(upload_to='sounds/', null=True, blank=True, help_text='Upload a sound file')
+    sound = models.FileField(upload_to=user_directory_path_sound, null=True, blank=True, help_text='Upload a sound file')
 
     #radial value or buttons
     rating = models.IntegerField(validators=[MinValueValidator(1),MaxValueValidator(5)], 
@@ -29,7 +37,7 @@ class GardenEntry(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, null=True)
 
     username = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    
+
 
     # Methods
     def get_absolute_url(self):
@@ -55,3 +63,4 @@ class GardenEntry(models.Model):
             return 'src=static/images/5Out5.png alt=Five'
         else:
             return 'src=static/images/0Out5.png alt=Zero'
+

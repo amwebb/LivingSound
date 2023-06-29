@@ -1,7 +1,13 @@
 
 {% extends "base_generic.html" %}
 
+
+
 {% block content %}
+
+<h1>Hello, {{ user }}</h1>
+
+<p class="submit-text">Please submit a new entry.</p>
 
 <div class="flex-container">
 
@@ -10,7 +16,35 @@
     <form method="post" enctype="multipart/form-data">
 
       {% csrf_token %}
-      {{ form.as_p }}
+
+      <div class="form-field">
+        <p>Please upload a picture:</p>
+        {{ form.picture }}
+      </div>
+
+      <div class="form-field">
+        <p>Please upload a sound (optional):</p>
+        {{ form.sound }}
+      </div>
+
+      <div class="form-field">
+        <p>Please rate your plant's growth:</p>
+        <ul>
+          <li>1 - very poor (not doing well)</li>
+          <li>2 - poor</li>
+          <li>3 - no change</li>
+          <li>4 - good</li>
+          <li>5 - very good (doing very well)</li>
+        </ul>
+        {{ form.rating }}
+      </div>
+      
+      <div class="form-field">
+        <p>Please write a little about your plant or your experience with this experiment.</p>
+        {{ form.message }}
+      </div>
+      
+      <!--{{ form.as_p }}-->
 
       <button class="button is-success is-fullwidth is-medium mt-5" type="submit">Submit
       </button>
