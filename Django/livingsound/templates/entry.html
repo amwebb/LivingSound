@@ -17,12 +17,19 @@
       <div class="plot">
         <!--Getting the username, date, progress image, rating image, and message 
           for each user and displaying it in a predetermined order-->
-        <div class="username"><p><strong>{{ entry.username }}</strong></p>
-          <p><small>{{ entry.timestamp }}</small></p></div>
+        <div class="name-rating-container">
+          <div class="username">
+            <p><strong>{{ entry.username }}</strong></p>
+            <p><small>{{ entry.timestamp }}</small></p>
+          </div>
+          <div class="rating-img">
+            <img src="{{ entry.ratingPic }}" onerror="this.style.display='none'" >
+          </div>
+        </div>
         <!-- Need to specify size here for images -->
-        <div class="plot-img"><img src="{{ entry.picture.url }}" alt="P1 Plant Update Photo" 
-          height="150px" width="150px"></div>
-        <div class="rating-img"><img {{ entry.ratingPic }} height="75px" width="75px"></div>
+        <div class="plot-img">
+          <img src="{{ entry.picture.url }}" onerror="this.style.display='none'" alt="P1 Plant Update Photo">
+        </div>
         <div class="message"><p style="font-size: 15px;"> {{ entry.message }} </p></div>
       </div>
     {% endfor %}

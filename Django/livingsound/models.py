@@ -52,15 +52,14 @@ class GardenEntry(models.Model):
     def ratingPic(self):
         """Returns the picture that corresponds with the rating integer"""
         if self.rating == 1:
-            return 'src=static/images/1Out5.png alt=One'
+            return 'static/images/1Out5.png'
         elif self.rating == 2:
-            return 'src=static/images/2Out5.png alt=Two'
+            return 'static/images/2Out5.png'
         elif self.rating == 3:
-            return 'src=static/images/3Out5.png alt=Three'
+            return 'static/images/3Out5.png'
         elif self.rating == 4:
-            return 'src=static/images/4Out5.png alt=Four'
+            return 'static/images/4Out5.png'
         elif self.rating == 5:
-            return 'src=static/images/5Out5.png alt=Five'
+            return 'static/images/5Out5.png'
         else:
-            return 'src=static/images/0Out5.png alt=Zero'
-
+            return 'static/images/0Out5.png'
