@@ -2,7 +2,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 
 
-
+from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
 # Create your views here.
 from django.core.exceptions import ObjectDoesNotExist
 from .models import GardenEntry
@@ -93,13 +94,18 @@ def garden(request):
     # except ObjectDoesNotExist:
     #     p12Ent = None
 
+    participants_group = Group.objects.get(name="Participants")
     entries = []
-    for i in range(MIN_USER_ID,MIN_USER_ID+NUM_USERS):
+    non_admin_users = User.objects.filter(is_staff=False)
+
+    for user in non_admin_users:
         try:
-            entry = GardenEntry.objects.filter(username=i).latest('timestamp')
+            entry = GardenEntry.objects.filter(username=user).latest('timestamp')
         except ObjectDoesNotExist:
             entry = None
         entries.append(entry)
+
+    entries.reverse()
 
     context = {
         "data" : entries,
