@@ -79,6 +79,15 @@ h1 {
     border-style: solid;
 }
 
+.two-column-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
+}
+
 .username {
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 15px;
