@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+
+
+{% block content %}
+
+
+
+<h1 style="margin-top: 50px;">You have successfully submitted an entry!</h1>
+
+<div class="flex-container" style="margin-top: 40px;">
+    <div class="success-text">
+        <p style="margin-bottom: 30px;">Click here to see your entry on the Garden Page</p>
+        <button class="success-button" type="button">
+            <a href="{% url 'garden' %}">View Garden</a>
+        </button>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

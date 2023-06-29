@@ -118,10 +118,13 @@ def submission(request):
             GardenEntry.save()
             
             #This is supposed to redirect to avoid double submission but hasn't worked yet
-            #return redirect("livingsound:submission")
+            return redirect("success")
         else: 
             print("This form is not valid")
     form = GardenForm()
     return render(request, 'livingsound/submission.html', {"form": form, 
                                                            "user": request.user.username,})
 
+
+def success(request):
+    return render(request, 'livingsound/success.html')

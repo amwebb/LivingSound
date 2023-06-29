@@ -11,10 +11,10 @@ class GardenEntry(models.Model):
 
     #Directory for files to go to specific folders
     def user_directory_path_img(instance, filename):
-        return "user_{0}/images/{1}_{2}".format(instance.username, datetime.now(), filename)
+        return "uploads/{0}/images/{1}_{2}".format(instance.username, datetime.now(), filename)
     
     def user_directory_path_sound(instance, filename):
-        return "user_{0}/sound/{1}_{2}".format(instance.username, datetime.now(), filename)
+        return "uploads/{0}/sound/{1}_{2}".format(instance.username, datetime.now(), filename)
 
     # Fields
 
