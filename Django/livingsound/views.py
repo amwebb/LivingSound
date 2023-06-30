@@ -10,11 +10,14 @@ from .models import GardenEntry
 from .forms import GardenForm
 # Decorator for Login Required
 from django.contrib.auth.decorators import login_required
+from natsort import natsort_keygen
+
+natsort_key = natsort_keygen()
 
 @login_required(login_url='/accounts/login/')
 def garden(request):
     entries = []
-    non_admin_users = User.objects.filter(groups__name='Participants').order_by('username')
+    non_admin_users = User.objects.filter(groups__name='Participants') #.order_by('username')
 
     for user in non_admin_users:
         try:
@@ -23,8 +26,7 @@ def garden(request):
         except ObjectDoesNotExist:
             pass
         
-
-    #entries.reverse()
+    entries.sort(key=lambda entry: natsort_key(str(entry.username)))
 
     context = {
         "data" : entries,
