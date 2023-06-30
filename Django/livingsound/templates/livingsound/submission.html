@@ -5,55 +5,53 @@
 
 {% block content %}
 
-<h1>Hello, {{ user }}</h1>
+<!-- <h1>Hello, {{ user }}</h1>
 
-<p class="submit-text">Please submit a new entry.</p>
+<p class="submit-text">Please submit a new entry.</p> -->
 
-<div class="flex-container">
+<div class="submit-form">
 
-  <div class="submit-form">
+  <form method="post" enctype="multipart/form-data">
 
-    <form method="post" enctype="multipart/form-data">
+    <h2>New Post</h2>
+    {% csrf_token %}
 
-      {% csrf_token %}
+    <div class="form-field">
+      <p>Upload a picture:
+      {{ form.picture }}
+    </p>
+    </div>
 
-      <div class="form-field">
-        <p>Please upload a picture:</p>
-        {{ form.picture }}
-      </div>
+    <div class="form-field">
+      <p>Upload a sound (optional):
+      {{ form.sound }}
+    </p>
+    </div>
 
-      <div class="form-field">
-        <p>Please upload a sound (optional):</p>
-        {{ form.sound }}
-      </div>
+    <div class="form-field">
+      <p>Rate your plant's health:</p>
+      <!-- <ul>
+        <li>1 - very poor (not doing well)</li>
+        <li>2 - poor</li>
+        <li>3 - no change</li>
+        <li>4 - good</li>
+        <li>5 - very good (doing very well)</li>
+      </ul> -->
+      {{ form.rating }}
+    </div>
 
-      <div class="form-field">
-        <p>Please rate your plant's growth:</p>
-        <!-- <ul>
-          <li>1 - very poor (not doing well)</li>
-          <li>2 - poor</li>
-          <li>3 - no change</li>
-          <li>4 - good</li>
-          <li>5 - very good (doing very well)</li>
-        </ul> -->
-        {{ form.rating }}
-      </div>
+    <div class="form-field">
+      <p>Write something about your plant or the experience thus far:</p>
+      {{ form.message }}
+    </div>
+    
+    <!--{{ form.as_p }}-->
 
-      <div class="form-field">
-        <p>Please write a little about your plant or your experience with this experiment.</p>
-        {{ form.message }}
-      </div>
-      
-      <!--{{ form.as_p }}-->
+    <button style="width: 80px; height: 30px;" type="submit">Submit
+    </button>
 
-      <button style="width: 80px; height: 30px;" type="submit">Submit
-      </button>
+  </form>
 
-    </form>
-
-  </div>
-  
 </div>
-
-
+  
 {% endblock %}

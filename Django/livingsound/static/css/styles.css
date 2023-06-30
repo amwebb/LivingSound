@@ -1,64 +1,68 @@
 
+:root {
+    --column-width: 350px;
+}
+
 * {
-    box-sizing: border-box;
     margin: 0;
 }
 
 html {
-    background-color: rgb(72, 160, 72);
+    background-color: #6580A6;
+    color: #592E29;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    height: 100%;
+    margin: 0;
 }
 
 a {
-    color: rgb(73, 35, 0);
+    color: #592E29;
     text-decoration: none;
     font-weight: bold;
 }
 
 a:hover {
-    color: darkgreen;
-}
-
-.ls-header-text {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    color: green;
+    color: #A64F44;
+    text-decoration: underline;
 }
 
 .header {
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
     flex-wrap: nowrap;
-    background-color: rgb(216, 169, 67);
-    padding: 20px 10%;
-    border-bottom: 5px solid rgb(73, 35, 0);
-    border-top: 5px solid rgb(73, 35, 0);
+    background-color: #94A655;
+    font-size: 1.75rem;
+    height: 100px;
+    vertical-align: middle;
 }
 
 .header > div {
     width: 250px;
     margin: 20px 10px;
-    text-align: center;
-    align-self: center;
+    display: flex;
+    border-radius: 20px;
+    align-items: center;
+    
+}
 
-    font-size: 25px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+.header > div > img {
+    height: 70px;
 }
 
 h1 {
     text-align: center;
     padding-top: 40px; 
     padding-bottom: 30px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: rgb(5, 47, 138);
+    margin: auto;
+    color:#94A655;
 }
 
 .plot-img {
-    margin-left: 10px;
-    margin-right: 10px;
-    align-self: center;
-    justify-self: center;
-    
+    margin: auto;
 }
 
 .plot-img > img {
@@ -82,91 +86,87 @@ h1 {
 
 .flex-container {
     display: flex;
+    flex-direction: column;
+    align-items:  flex-start;
     flex-wrap: nowrap;
-    justify-content: center;
+    max-width: 1200px;
+    margin: auto;
+    background-color: #4E5925;
+    min-height: 100vh;
 }
 
 
 
 .two-column-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    justify-content: space-evenly;
+    grid-template-columns: var(--column-width);
+    grid-template-rows: auto;
+    row-gap: 20px;
+    column-gap: 20px;
     justify-items: center;
-    align-content: space-evenly;
-    align-items: center;
-    max-width: 1000px;
-    margin: auto;
+    margin-top: 50px;
+    width: var(--column-width);
+    align-self: center;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 800px) {
     .two-column-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, var(--column-width));
+        width: 720px;
     }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1200px) {
     .two-column-grid {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: repeat(3, var(--column-width));
+        width: 1090px;
     }
 }
 
 .username {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 15px;
     font: bold;
-    padding-left: 10px;
-    margin: 5px;
-    color: rgb(255, 245, 139);
-    padding-bottom: 5px;
     float: left;
+    width: 150px;
+    font-size: 1.25rem;
 }
 
 .message {
-    margin: -5px 5px 5px; 
-    background-color: rgb(255, 245, 139);
-    border-radius: 5px;
-    border-color: black;
-    border-width: 2px;
-    border-style: solid;
-    padding: 5px;
+    margin-top: 10px;
+    font-style:italic;
 }
 
 .plot {
-    background-color: rgb(155, 107, 4);
-    width: 300px;
-    margin: 10px;
-    padding: 5px;
+    background-color: #c7ae7f;
+    width: 290px;
+    padding: 30px;
     border-radius: 5px;
-    border-color: rgb(73, 35, 0);
-    border-style: solid;
     border-width: 5px;
-    min-height: 150px;
+    min-height: 350px;
+    max-width: 310px;
+    height: auto;
 }
 
 .submit-text {
     text-align: center;
-    font-size: large;
     font-weight: bold;
     color: rgb(73, 35, 0);
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 .submit-form {
-    background-color: rgb(255, 245, 139);
-    align-self: center;
-    margin: 20px 0px;
-    width: 400px;
-    padding: 10px;
+    background-color: rgb(255, 249, 217);
+    margin-top: 40px;
+    width: var(--column-width);
+    padding: 20px;
     border-radius: 3px;
     border-color: rgb(73, 35, 0);
     border-style: solid;
     border-width: 5px;
+    align-self:center;
 }
 
 .form-field {
     padding: 10px;
-    padding: 5px;
+    font-size: 1.2rem;
 }
 
 .success-text {
@@ -175,7 +175,7 @@ h1 {
     padding: 5px;
     font-size: medium;
     font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
+    color:#94A655;
 }
 
 .success-button {
