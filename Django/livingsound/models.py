@@ -65,3 +65,4 @@ class GardenEntry(models.Model):
             return 'static/images/5Out5.png'
         else:
             return 'static/images/0Out5.png'
+

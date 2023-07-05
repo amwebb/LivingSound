@@ -21,7 +21,7 @@ class GardenForm(forms.ModelForm):
 
     class Meta:
         model = GardenEntry
-        fields = ['picture', 'sound', 'rating', 'message']
+        fields = ['picture', 'rating', 'message']
         exclude = ("username", )
         widgets = {
           'message': Textarea(attrs={'rows':10, 'cols':45}),

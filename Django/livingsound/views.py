@@ -11,6 +11,8 @@ from .forms import GardenForm
 # Decorator for Login Required
 from django.contrib.auth.decorators import login_required
 from natsort import natsort_keygen
+from plotly.offline import plot
+from plotly.graph_objs import Scatter
 
 natsort_key = natsort_keygen()
 
@@ -55,3 +57,31 @@ def submission(request):
 
 def success(request):
     return render(request, 'livingsound/success.html')
+
+#individual pages
+
+@login_required(login_url='/accounts/login/')
+def profile(request, username):
+    """Returns QuerySet of all entries of specified user and creates a graph that shows the ratings over time."""
+    u = User.objects.get(username=username)
+    try:
+        profileEnts = GardenEntry.objects.filter(username=u.id)
+    except ObjectDoesNotExist:
+        pass
+
+    ratingLst = []
+    for ent in profileEnts:
+        ratingLst.append(ent.rating)
+    
+    x_data = []
+    for x in range(len(ratingLst)):
+        x_data.append(x)
+
+    plot_div = plot([Scatter(x=x_data, y=ratingLst, mode='lines', 
+                             name='p1 Rating Chart', opacity=0.8, marker_color='green')],
+                             output_type='div', include_plotlyjs=False)
+
+    return render(request, 'livingsound/profile.html',  {"profileEnts": profileEnts,
+                                                         "username": u.username,
+                                                         "plot_div": plot_div})
+

@@ -3,4 +3,6 @@ venv
 .DS_STORE
 Django/.venv/
 Django/.vscode/
+libraries/
+s2p/
 

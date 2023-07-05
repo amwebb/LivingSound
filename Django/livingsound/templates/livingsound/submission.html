@@ -17,19 +17,21 @@
     {% csrf_token %}
 
     <div class="form-field">
-      <p>Upload a picture:
+      <p>1. Upload a picture:
       {{ form.picture }}
     </p>
     </div>
 
+    <!--
     <div class="form-field">
       <p>Upload a sound (optional):
       {{ form.sound }}
     </p>
     </div>
+  -->
 
     <div class="form-field">
-      <p>Rate your plant's health:</p>
+      <p>2. Rate your plant's health:</p>
       <!-- <ul>
         <li>1 - very poor (not doing well)</li>
         <li>2 - poor</li>
@@ -41,7 +43,7 @@
     </div>
 
     <div class="form-field">
-      <p>Write something about your plant or the experience thus far:</p>
+      <p>3. Write something about your plant or the experience thus far:</p>
       {{ form.message }}
     </div>
     

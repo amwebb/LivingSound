@@ -1,0 +1,47 @@
+{% extends "base_generic.html" %}
+
+
+
+{% block content %}
+
+<h1>Welcome to {{ username }}'s page!</h1>
+<p style="text-align: center; align-self: center; font-weight: bold; color: #4b211d; font-size: large;">
+    See all of {{ username }}'s posts and a graph showing their plant's growth.
+</p>
+
+<div class="two-column-grid">
+
+    {% for entry in profileEnts %}
+    <div class="plot">
+        <!--Getting the username, date, progress image, rating image, and message 
+          for each user and displaying it in a predetermined order-->
+        <div class="name-rating-container">
+            <div class="username">
+                <p><strong>{{ entry.username }}</strong></p>
+                <p><small>{{ entry.timestamp }}</small></p>
+            </div>
+            <div class="rating-img">
+                <img src="../{{ entry.ratingPic }}">
+            </div>
+        </div>
+        <!-- Need to specify size here for images -->
+        <div class="plot-img">
+            <img src="{{ entry.picture.url }}" onerror="this.style.display='none'" alt="P1 Plant Update Photo">
+        </div>
+        <div class="message">
+            <p style="font-size: 15px;"> {{ entry.message }} </p>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+<h1>Graph of all of {{ profileEnts.first.username }}'s ratings</h1>
+
+<div class="rating-graph" style="align-self: center; margin: 10px;">
+    {% autoescape off %}
+    {{ plot_div }}
+    {% endautoescape %}
+</div>
+
+{% endblock %}

@@ -10,7 +10,6 @@
 
 <!--Flex box layout for garden columns-->
 <!--add sound if time-->
-  
   <div class="two-column-grid">
 
     {% for entry in data %}
@@ -19,7 +18,7 @@
           for each user and displaying it in a predetermined order-->
         <div class="name-rating-container">
           <div class="username">
-            <p><strong>{{ entry.username }}</strong></p>
+            <a href="/{{entry.username}}"><strong>{{ entry.username }}</strong></a>
             <p><small>{{ entry.timestamp }}</small></p>
           </div>
           <div class="rating-img">
