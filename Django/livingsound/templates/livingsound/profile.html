@@ -38,10 +38,10 @@
 
 <h1>Graph of all of {{ profileEnts.first.username }}'s ratings</h1>
 
-<div class="rating-graph" style="align-self: center; margin: 10px;">
-    {% autoescape off %}
-    {{ plot_div }}
-    {% endautoescape %}
-</div>
+
+{% autoescape off %}
+{{ plot_div }}
+{% endautoescape %}
+
 
 {% endblock %}

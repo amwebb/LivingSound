@@ -79,7 +79,7 @@ def profile(request, username):
 
     plot_div = plot([Scatter(x=x_data, y=ratingLst, mode='lines', 
                              name='p1 Rating Chart', opacity=0.8, marker_color='green')],
-                             output_type='div', include_plotlyjs=False)
+                             output_type='div', include_plotlyjs=False, config={'responsive': True})
 
     return render(request, 'livingsound/profile.html',  {"profileEnts": profileEnts,
                                                          "username": u.username,

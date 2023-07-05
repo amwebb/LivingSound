@@ -24,7 +24,7 @@ class GardenForm(forms.ModelForm):
         fields = ['picture', 'rating', 'message']
         exclude = ("username", )
         widgets = {
-          'message': Textarea(attrs={'rows':10, 'cols':45}),
+          'message': Textarea(attrs={'rows':10, 'cols':42}),
           'rating': RangeInput,
         }
         
