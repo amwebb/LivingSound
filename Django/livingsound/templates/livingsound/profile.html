@@ -13,7 +13,7 @@
 
     {% for entry in profileEnts %}
     <a class="lightbox" onclick="openModal('{{ entry.picture.url }}')">
-        <div class="plot" style="background-image: linear-gradient(180deg, rgba(199, 174, 127, 0.95) 25%, rgba(199, 174, 127, 0.85) 60%, rgba(199, 174, 127, 0) 100%), url('{{ entry.picture.url }}')">
+        <div class="plot" style="background-image: linear-gradient(180deg, rgba(199, 174, 127, 0.95) 25%, rgba(199, 174, 127, 0.85) 75%, rgba(199, 174, 127, 0.25) 100%), url('{{ entry.picture.url }}')">
             <!--Getting the username, date, progress image, rating image, and message 
             for each user and displaying it in a predetermined order-->
             <div class="name-rating-message-container">

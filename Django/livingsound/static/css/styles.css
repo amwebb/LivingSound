@@ -114,7 +114,7 @@ h3 {
     row-gap: 20px;
     column-gap: 20px;
     justify-items: center;
-    margin-top: 50px;
+    margin-top: 25px;
     width: var(--column-width);
     align-self: center;
     margin-left: auto;
@@ -152,10 +152,10 @@ h3 {
 
 .message {
     float: left;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-style:italic;
+    margin-top: 10px;
+    font-style: italic;
     font-weight: bold;
+    height: auto;
 }
 
 .plot {
@@ -220,7 +220,7 @@ h3 {
 .name-rating-message-container {
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 300px;
+    max-height: 100%;
 }
 
 .rating-graph {
@@ -234,7 +234,7 @@ h3 {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content:  center;
-    margin-top: 50px;
+    margin-top: 25px;
 }
 
 .small-plot {
