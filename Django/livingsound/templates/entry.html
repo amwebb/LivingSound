@@ -19,7 +19,8 @@
         <div class="name-rating-container">
           <div class="username">
             <a href="/{{entry.username}}"><strong>{{ entry.username }}</strong></a>
-            <p><small>{{ entry.timestamp }}</small></p>
+            <p><small>{{ entry.timestamp | date:"l, M j"}}</small></p>
+            <p><small>{{ entry.timestamp | date:"P"}}</small></p>
           </div>
           <div class="rating-img">
             <img src="{{ entry.ratingPic }}" onerror="this.style.display='none'" >

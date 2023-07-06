@@ -34,7 +34,7 @@ def garden(request):
         "data" : entries,
     }
 
-    return render(request, 'entry.html', context=context)
+    return render(request, 'livingsound/garden.html', context=context)
 
 @login_required(login_url='/accounts/login/')
 def submission(request):

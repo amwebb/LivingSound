@@ -5,9 +5,9 @@
 {% block content %}
 
 <h1>Welcome to {{ username }}'s page!</h1>
-<p style="text-align: center; align-self: center; font-weight: bold; color: #4b211d; font-size: large;">
+<h3>
     See all of {{ username }}'s posts and a graph showing their plant's growth.
-</p>
+</h3>
 
 <div class="two-column-grid">
 
@@ -18,19 +18,23 @@
         <div class="name-rating-container">
             <div class="username">
                 <p><strong>{{ entry.username }}</strong></p>
-                <p><small>{{ entry.timestamp }}</small></p>
+                <p><small>{{ entry.timestamp | date:"l, M j"}}</small></p>
+                <p><small>{{ entry.timestamp | date:"P"}}</small></p>
             </div>
             <div class="rating-img">
                 <img src="../{{ entry.ratingPic }}">
             </div>
         </div>
+        <div class="message">
+            <p> {{ entry.message }} </p>
+        </div>
         <!-- Need to specify size here for images -->
         <div class="plot-img">
-            <img src="{{ entry.picture.url }}" onerror="this.style.display='none'" alt="P1 Plant Update Photo">
+            <a class="lightbox" onclick="openModal('{{ entry.picture.url }}')">
+            <img src="{{ entry.picture.url }}" onerror="this.style.display='none'" alt="{{ entry.username }}'s Plant Update Photo">
+        </a>
         </div>
-        <div class="message">
-            <p style="font-size: 15px;"> {{ entry.message }} </p>
-        </div>
+        
     </div>
     {% endfor %}
 
@@ -38,10 +42,35 @@
 
 <h1>Graph of all of {{ profileEnts.first.username }}'s ratings</h1>
 
-
 {% autoescape off %}
 {{ plot_div }}
 {% endautoescape %}
 
+<div class="lightbox-target" id="box-target" onclick="closeModal()">
+    <img id="img-target" onclick="e => { e.stopPropagation(); }"/>
+    <a class="lightbox-close" onclick="closeModal()"></a>
+</div>
+
+<script>
+    let boxTarget = document.querySelector("#box-target");
+    let imgTarget = document.querySelector("#img-target");
+
+    function openModal(url) {
+        boxTarget.style.opacity = 1;
+        boxTarget.style.top = 0;
+        boxTarget.style.bottom = 0;
+        imgTarget.src = url;
+    }
+
+    function closeModal() {
+        boxTarget.style.opacity = 0;
+        boxTarget.style.top = "-100%";
+        boxTarget.style.bottom = null;
+        imgTarget.src = null;
+    }
+
+    document.body.appendChild(boxTarget);
+
+</script>
 
 {% endblock %}

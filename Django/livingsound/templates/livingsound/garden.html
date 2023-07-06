@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<!--Flex box layout for garden columns-->
+<!--add sound if time-->
+  <div class="plot-grid">
+
+    {% for entry in data %}
+        <a href="/{{entry.username}}">
+            <div class="small-plot">
+                <img src="{{ entry.ratingPic }}" onerror="this.style.display='none'" >
+                <h2>{{ entry.username }}</h2>
+            </div>
+        </a>
+    {% endfor %}
+
+  </div>
+
+{% endblock %}
