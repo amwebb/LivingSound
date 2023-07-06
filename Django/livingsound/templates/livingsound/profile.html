@@ -12,30 +12,31 @@
 <div class="two-column-grid">
 
     {% for entry in profileEnts %}
-    <div class="plot">
-        <!--Getting the username, date, progress image, rating image, and message 
-          for each user and displaying it in a predetermined order-->
-        <div class="name-rating-container">
-            <div class="username">
-                <p><strong>{{ entry.username }}</strong></p>
-                <p><small>{{ entry.timestamp | date:"l, M j"}}</small></p>
-                <p><small>{{ entry.timestamp | date:"P"}}</small></p>
+    <a class="lightbox" onclick="openModal('{{ entry.picture.url }}')">
+        <div class="plot" style="background-image: linear-gradient(180deg, rgba(199, 174, 127, 1) 25%, rgba(199, 174, 127, 0.85) 75%, rgba(199, 174, 127, 0.5) 100%), url('{{ entry.picture.url }}')">
+            <!--Getting the username, date, progress image, rating image, and message 
+            for each user and displaying it in a predetermined order-->
+            <div class="name-rating-container">
+                <div class="username">
+                    <p><strong>{{ entry.username }}</strong></p>
+                    <p><small>{{ entry.timestamp | date:"l, M j"}}</small></p>
+                    <p><small>{{ entry.timestamp | date:"P"}}</small></p>
+                </div>
+                <div class="rating-img">
+                    <img src="../{{ entry.ratingPic }}">
+                </div>
             </div>
-            <div class="rating-img">
-                <img src="../{{ entry.ratingPic }}">
+            <div class="message">
+                <p> {{ entry.message }} </p>
             </div>
+            <!-- Need to specify size here for images -->
+            <!-- <div class="plot-img">
+                <a class="lightbox" onclick="openModal('{{ entry.picture.url }}')">
+                    <img src="{{ entry.picture.url }}" onerror="this.style.display='none'" alt="{{ entry.username }}'s Plant Update Photo">
+                </a>
+            </div> -->
         </div>
-        <div class="message">
-            <p> {{ entry.message }} </p>
-        </div>
-        <!-- Need to specify size here for images -->
-        <div class="plot-img">
-            <a class="lightbox" onclick="openModal('{{ entry.picture.url }}')">
-            <img src="{{ entry.picture.url }}" onerror="this.style.display='none'" alt="{{ entry.username }}'s Plant Update Photo">
-        </a>
-        </div>
-        
-    </div>
+    </a>
     {% endfor %}
 
 </div>
@@ -47,7 +48,7 @@
 {% endautoescape %}
 
 <div class="lightbox-target" id="box-target" onclick="closeModal()">
-    <img id="img-target" onclick="e => { e.stopPropagation(); }"/>
+    <img id="img-target" onclick="event.stopPropagation();"/>
     <a class="lightbox-close" onclick="closeModal()"></a>
 </div>
 
@@ -56,17 +57,15 @@
     let imgTarget = document.querySelector("#img-target");
 
     function openModal(url) {
-        boxTarget.style.opacity = 1;
-        boxTarget.style.top = 0;
-        boxTarget.style.bottom = 0;
         imgTarget.src = url;
+        boxTarget.classList.add("lightbox-target-visible");
+        document.body.classList.add("no-scroll");
     }
 
     function closeModal() {
-        boxTarget.style.opacity = 0;
-        boxTarget.style.top = "-100%";
-        boxTarget.style.bottom = null;
-        imgTarget.src = null;
+        imgTarget.removeAttribute('src');
+        boxTarget.classList.remove("lightbox-target-visible");
+        document.body.classList.remove("no-scroll");
     }
 
     document.body.appendChild(boxTarget);
