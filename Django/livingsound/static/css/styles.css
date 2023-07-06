@@ -55,9 +55,8 @@ a {
 
 h1 {
     text-align: center;
-    padding-top: 40px; 
-    padding-bottom: 30px;
     margin: auto;
+    margin-top: 50px;
     color:#94A655;
     
 }
@@ -67,6 +66,7 @@ h3 {
     font-weight: bold; 
     color: #c7ae7f; 
     margin: 15px auto;
+    margin-top: 40px;
     font-size: 1.5rem;
 }
 
@@ -114,7 +114,6 @@ h3 {
     row-gap: 20px;
     column-gap: 20px;
     justify-items: center;
-    margin-top: 25px;
     width: var(--column-width);
     align-self: center;
     margin-left: auto;
