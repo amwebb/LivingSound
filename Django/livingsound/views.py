@@ -12,7 +12,7 @@ from .forms import GardenForm
 from django.contrib.auth.decorators import login_required
 from natsort import natsort_keygen
 from plotly.offline import plot
-from plotly.graph_objs import Scatter
+import plotly.graph_objs as go
 
 natsort_key = natsort_keygen()
 
@@ -65,24 +65,42 @@ def success(request):
 def profile(request, username):
     """Returns QuerySet of all entries of specified user and creates a graph that shows the ratings over time."""
     u = User.objects.get(username=username)
+    
     try:
         profileEnts = GardenEntry.objects.filter(username=u.id)
     except ObjectDoesNotExist:
         pass
 
-    ratingLst = []
-    for ent in profileEnts:
-        ratingLst.append(ent.rating)
-    
-    x_data = []
-    for x in range(len(ratingLst)):
-        x_data.append(x)
+    if len(profileEnts) > 0:
+        reverse = []
+        ratingLst = []
+        x_data = []
+        for ent in profileEnts:
+            ratingLst.append(ent.rating)
+            reverse.insert(0, ent)
+            x_data.append(ent.timestamp)
+        
+        fig = go.Figure(go.Scatter(x=x_data, y=ratingLst, mode='lines', name='p1 Rating Chart', opacity=0.8, marker_color='green'))
+        fig.update_layout(
+            yaxis = dict(
+                tickmode = 'array',
+                tickvals = [1, 2, 3, 4, 5],
+                ticktext = ['😩','☹️','😐','🙂','😄'],
+                tickfont = dict(size=20),
+                title = "Ratings"
+                ),
+            xaxis = dict(
+                tickfont = dict(size=20),
+                tickformat = "%b %e",
+                title = "Dates"
+            )
+        )
 
-    plot_div = plot([Scatter(x=x_data, y=ratingLst, mode='lines', 
-                             name='p1 Rating Chart', opacity=0.8, marker_color='green')],
-                             output_type='div', include_plotlyjs=False, config={'responsive': True})
+        plot_div = plot(fig, output_type='div', include_plotlyjs=False, config={'responsive': True})
 
-    return render(request, 'livingsound/profile.html',  {"profileEnts": profileEnts,
-                                                         "username": u.username,
-                                                         "plot_div": plot_div})
+        return render(request, 'livingsound/profile.html',  {"profileEnts": reverse,
+                                                            "username": u.username,
+                                                            "plot_div": plot_div})
+    else:
+        return render(request, 'livingsound/profile.html', {"username": u.username})
 

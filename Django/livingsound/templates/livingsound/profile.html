@@ -4,9 +4,25 @@
 
 {% block content %}
 
-<h1>Welcome to {{ username }}'s page!</h1>
+<h1>{{ username }}</h1>
+
+<script>
+    function audioError() {
+        document.querySelector('.audio-container').style.display = 'none';
+    }
+</script>
+
+<div class="audio-container">
+    <h3>Sound</h3>
+    <audio style="margin: 20px auto; display: block;" controls loop>
+        <source src="/static/sounds/{{ username }}.mp3" type="audio/mp3" onerror="audioError()">
+    </audio>
+</div>
+
+
+{% if profileEnts %}
 <h3>
-    See all of {{ username }}'s posts and a graph showing their plant's growth.
+    Posts
 </h3>
 
 <div class="two-column-grid">
@@ -42,11 +58,15 @@
 
 </div>
 
-<h1>Graph of all of {{ profileEnts.first.username }}'s ratings</h1>
+{% if plot_div %}
+    <h3>Ratings</h3>
 
-{% autoescape off %}
-{{ plot_div }}
-{% endautoescape %}
+    {% autoescape off %}
+    <div class="graph-container">
+    {{ plot_div }}
+    </div>
+    {% endautoescape %}
+{% endif %}
 
 <div class="lightbox-target" id="box-target" onclick="closeModal()">
     <img id="img-target" onclick="event.stopPropagation();"/>
@@ -72,5 +92,10 @@
     document.body.appendChild(boxTarget);
 
 </script>
+{% else %}
+
+<h3>No posts ☹️</h3>
+
+{% endif %}
 
 {% endblock %}

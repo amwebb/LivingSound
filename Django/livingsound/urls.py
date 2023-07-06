@@ -7,6 +7,6 @@ urlpatterns = [
     path("submission/", views.submission, name="submission"),  
     path("success", views.success, name="success"),
     path("accounts/", include("django.contrib.auth.urls")),  
-    re_path(r'^posts/(?P<username>\w+)/$', views.profile, name="profile"),
+    re_path(r'^users/(?P<username>\w+)/$', views.profile, name="profile"),
 
 ]
