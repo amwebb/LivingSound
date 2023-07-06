@@ -19,5 +19,6 @@ __pycache__/
 /setup.cfg
 
 .env
+.production-env
 env/
 venv/
