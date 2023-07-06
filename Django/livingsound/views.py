@@ -24,9 +24,10 @@ def garden(request):
     for user in non_admin_users:
         try:
             entry = GardenEntry.objects.filter(username=user).latest('timestamp')
-            entries.append(entry)
         except ObjectDoesNotExist:
-            pass
+            entry = GardenEntry()
+            entry.username = user   
+        entries.append(entry)
         
     entries.sort(key=lambda entry: natsort_key(str(entry.username)))
 
@@ -54,7 +55,7 @@ def submission(request):
     return render(request, 'livingsound/submission.html', {"form": form, 
                                                            "user": request.user.username,})
 
-
+@login_required(login_url='/accounts/login/')
 def success(request):
     return render(request, 'livingsound/success.html')
 

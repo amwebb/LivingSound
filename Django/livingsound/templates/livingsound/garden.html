@@ -7,9 +7,9 @@
   <div class="plot-grid">
 
     {% for entry in data %}
-        <a href="/{{entry.username}}">
+        <a href="/posts/{{entry.username}}">
             <div class="small-plot">
-                <img src="{{ entry.ratingPic }}" onerror="this.style.display='none'" >
+                <img src="/{{ entry.ratingPic }}" onerror="this.style.display='none'" >
                 <h2>{{ entry.username }}</h2>
             </div>
         </a>

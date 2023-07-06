@@ -135,18 +135,26 @@ h3 {
     }
 }
 
-.username {
-    font: bold;
+.user-date {
     float: left;
-    width: 150px;
+    width: 180px;
+}
+
+.username {
+    font-weight: 700;
     font-size: 1.25rem;
 }
 
+.date {
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
 .message {
-    margin-top: 10px;
+    float: left;
+    margin-top: 20px;
     margin-bottom: 10px;
     font-style:italic;
-    font-size: 1.1rem;
     font-weight: bold;
 }
 
@@ -158,7 +166,7 @@ h3 {
     border-width: 5px;
     min-height: 350px;
     max-width: 310px;
-    height: auto;
+    max-height: 350;
 
     background-size: cover;
     background-repeat: no-repeat;
@@ -209,8 +217,10 @@ h3 {
     font-weight: bold;
 }
 
-.name-rating-container {
-    min-height: 100px;
+.name-rating-message-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 300px;
 }
 
 .rating-graph {
