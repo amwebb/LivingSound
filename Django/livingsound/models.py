@@ -10,6 +10,8 @@ from datetime import datetime
 class GardenEntry(models.Model):
     """A typical class defining a model, derived from the Model class."""
 
+    username = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+
     #Directory for files to go to specific folders
     def user_directory_path_img(instance, filename):
         return "uploads/{0}/images/{1}_{2}".format(instance.username, datetime.now(), filename)
@@ -38,7 +40,7 @@ class GardenEntry(models.Model):
     #timestamp is used to find the newest entry
     timestamp = models.DateTimeField(auto_now_add=True, null=True)
 
-    username = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    #username = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     # groups = models.ForeignKey(Group, related_name='groups', on_delete=models.DO_NOTHING)
 
     # Methods
@@ -65,4 +67,3 @@ class GardenEntry(models.Model):
             return 'static/images/5Out5.png'
         else:
             return 'static/images/0Out5.png'
-

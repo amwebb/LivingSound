@@ -1,7 +1,5 @@
 {% extends "base_generic.html" %}
 
-
-
 {% block content %}
 
 <h1>{{ username }}</h1>
@@ -13,9 +11,9 @@
 </script>
 
 <div class="audio-container">
-    <h3>Sound</h3>
+    <h3>Original Sound</h3>
     <audio style="margin: 20px auto; display: block;" controls loop>
-        <source src="/static/sounds/{{ username }}.mp3" type="audio/mp3" onerror="audioError()">
+        <source src="/static/sound/{{ username }}.mp3" type="audio/mp3" onerror="audioError()">
     </audio>
 </div>
 
@@ -29,7 +27,8 @@
 
     {% for entry in profileEnts %}
     <a class="lightbox" onclick="openModal('{{ entry.picture.url }}')">
-        <div class="plot" style="background-image: linear-gradient(180deg, rgba(199, 174, 127, 0.95) 25%, rgba(199, 174, 127, 0.85) 75%, rgba(199, 174, 127, 0.25) 100%), url('{{ entry.picture.url }}')">
+        <div class="plot"
+            style="background-image: linear-gradient(180deg, rgba(199, 174, 127, 0.95) 25%, rgba(199, 174, 127, 0.85) 50%, rgba(199, 174, 127, 0.25) 100%), url('{{ entry.picture.url }}')">
             <!--Getting the username, date, progress image, rating image, and message 
             for each user and displaying it in a predetermined order-->
             <div class="name-rating-message-container">
@@ -45,7 +44,7 @@
                     <p> {{ entry.message }} </p>
                 </div>
             </div>
-            
+
             <!-- Need to specify size here for images -->
             <!-- <div class="plot-img">
                 <a class="lightbox" onclick="openModal('{{ entry.picture.url }}')">
@@ -69,7 +68,7 @@
 {% endif %}
 
 <div class="lightbox-target" id="box-target" onclick="closeModal()">
-    <img id="img-target" onclick="event.stopPropagation();"/>
+    <img id="img-target" onclick="event.stopPropagation();" />
     <a class="lightbox-close" onclick="closeModal()"></a>
 </div>
 

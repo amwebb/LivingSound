@@ -70,6 +70,8 @@ def profile(request, username):
         profileEnts = GardenEntry.objects.filter(username=u.id)
     except ObjectDoesNotExist:
         pass
+    
+    userSound = "{0}.mp3".format(u.username)
 
     if len(profileEnts) > 0:
         reverse = []
@@ -100,7 +102,7 @@ def profile(request, username):
 
         return render(request, 'livingsound/profile.html',  {"profileEnts": reverse,
                                                             "username": u.username,
+                                                            "userSound": userSound,
                                                             "plot_div": plot_div})
     else:
         return render(request, 'livingsound/profile.html', {"username": u.username})
-
