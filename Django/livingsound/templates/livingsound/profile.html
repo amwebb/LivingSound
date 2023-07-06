@@ -13,7 +13,8 @@
 <div class="audio-container">
     <h3>Original Sound</h3>
     <audio style="margin: 20px auto; display: block;" controls loop>
-        <source src="/static/sound/{{ username }}.mp3" type="audio/mp3" onerror="audioError()">
+        {% load static %}
+        <source src="{% static 'sound/'|add:username|add:'.mp3' %}" type="audio/mp3" onerror="audioError()">
     </audio>
 </div>
 
