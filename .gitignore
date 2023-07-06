@@ -5,4 +5,5 @@ Django/.venv/
 Django/.vscode/
 libraries/
 s2p/
+.production-env
 
