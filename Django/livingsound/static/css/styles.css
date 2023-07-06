@@ -240,20 +240,18 @@ h3 {
 .small-plot {
     position: relative;
     background-color: #c7ae7f;
-    border-radius: 10px;
+    border-radius: 50%;
     width: 150px;
     height: 150px;
     margin: 10px;
-    border-radius: 5px;
-    border-width: 5px;
     border: 5px solid transparent;
 }
 
 
 .small-plot > h2 {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
+    margin-top: -40px;
+    right: 25px;
 }
 
 .small-plot:hover {
@@ -266,6 +264,12 @@ h3 {
     width: 100%;
     height: auto;
     margin-top: -10px;
+}
+
+.audio {
+    display: flex;
+    justify-content: center;
+    
 }
 
 /* Styles the lightbox, removes it from sight and adds the fade-in transition */

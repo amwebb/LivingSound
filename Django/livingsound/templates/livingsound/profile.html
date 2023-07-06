@@ -9,11 +9,21 @@
     See all of {{ username }}'s posts and a graph showing their plant's growth.
 </h3>
 
+<div class="audio">
+    <h1>Original Audio</h1>
+</div>
+<div class="audio">
+    <audio controls src="../../static/sound/{{ userSound }}">
+        <a href="../../static/sound/{{ userSound }}"></a>
+    </audio>
+</div>
+
 <div class="two-column-grid">
 
     {% for entry in profileEnts %}
     <a class="lightbox" onclick="openModal('{{ entry.picture.url }}')">
-        <div class="plot" style="background-image: linear-gradient(180deg, rgba(199, 174, 127, 0.95) 25%, rgba(199, 174, 127, 0.85) 75%, rgba(199, 174, 127, 0.25) 100%), url('{{ entry.picture.url }}')">
+        <div class="plot"
+            style="background-image: linear-gradient(180deg, rgba(199, 174, 127, 0.95) 25%, rgba(199, 174, 127, 0.85) 50%, rgba(199, 174, 127, 0.25) 100%), url('{{ entry.picture.url }}')">
             <!--Getting the username, date, progress image, rating image, and message 
             for each user and displaying it in a predetermined order-->
             <div class="name-rating-message-container">
@@ -29,7 +39,7 @@
                     <p> {{ entry.message }} </p>
                 </div>
             </div>
-            
+
             <!-- Need to specify size here for images -->
             <!-- <div class="plot-img">
                 <a class="lightbox" onclick="openModal('{{ entry.picture.url }}')">
@@ -49,7 +59,7 @@
 {% endautoescape %}
 
 <div class="lightbox-target" id="box-target" onclick="closeModal()">
-    <img id="img-target" onclick="event.stopPropagation();"/>
+    <img id="img-target" onclick="event.stopPropagation();" />
     <a class="lightbox-close" onclick="closeModal()"></a>
 </div>
 

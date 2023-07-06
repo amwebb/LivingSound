@@ -69,6 +69,8 @@ def profile(request, username):
         profileEnts = GardenEntry.objects.filter(username=u.id)
     except ObjectDoesNotExist:
         pass
+    
+    userSound = "{0}.mp3".format(u.username)
 
     ratingLst = []
     for ent in profileEnts:
@@ -84,5 +86,6 @@ def profile(request, username):
 
     return render(request, 'livingsound/profile.html',  {"profileEnts": profileEnts,
                                                          "username": u.username,
+                                                         "userSound": userSound,
                                                          "plot_div": plot_div})
 
