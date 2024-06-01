@@ -20,6 +20,13 @@ let graphX, graphY;
 let currentScale = 1, currentAngle = 0;
 let currentX, currentY;
 
+let patternImageButton;
+let patternImage;
+let segments;
+let sx, sy, sWidth, sHeight;
+let segmentSelect;
+let segmentWidth;
+
 let transform = {
   angle: 0,
   scale: 1,
@@ -107,48 +114,77 @@ function setup() {
   //   }
   // });
 
-  // Create the export button and append it to the container
-  exportButton = createButton('Export');
-  exportButton.mouseClicked(exportImage);
-  exportButton.style('font-size', '24px');
-  exportButton.style('width', '120px');
-  exportButton.style('height', '60px');
-  buttonContainer.child(exportButton);
+  patternImageButton = addButton('Pattern', buttonContainer, setupPattern);
+  // exportButton = addButton('Export', buttonContainer, exportImage);
+  // uploadButton = addButton('Load', buttonContainer, uploadFile);
+  // playbackButton = addButton(playCharacter, buttonContainer, playbackRecording);
 
-  // Create the upload button and append it to the container
-  uploadButton = createButton('Load');
-  uploadButton.mouseClicked(uploadFile);
-  uploadButton.style('font-size', '24px');
-  uploadButton.style('width', '120px');
-  uploadButton.style('height', '60px');
-  buttonContainer.child(uploadButton);
-
-  // Create the playback button and append it to the container
-  playbackButton = createButton(playCharacter);
-  playbackButton.mousePressed(playbackRecording);
-  playbackButton.style('font-size', '24px');
-  playbackButton.style('width', '120px');
-  playbackButton.style('height', '60px');
-  buttonContainer.child(playbackButton);
+  segmentSelect = createSelect();
+  segmentSelect.option('1');
+  segmentSelect.option('2');
+  segmentSelect.option('3');
+  segmentSelect.option('4');
+  segmentSelect.style('font-size', '24px');
+  segmentSelect.style('width', '120px');
+  segmentSelect.style('height', '60px');
+  buttonContainer.child(segmentSelect);
 
   // Create slider and label for radial graph thickness
-  thicknessSlider = createSlider(1, 50, 10);
-  thicknessLabel = createDiv('Thickness');
-  label.child(thicknessLabel);
-  label.child(thicknessSlider);
+  // thicknessSlider = createSlider(1, 50, 10);
+  // thicknessLabel = createDiv('Thickness');
+  // label.child(thicknessLabel);
+  // label.child(thicknessSlider);
 
-  amplitudeSlider = createSlider(1, 200, 100);
-  ampLabel = createDiv('Amplitude');
-  label.child(ampLabel);
-  label.child(amplitudeSlider);
+  // amplitudeSlider = createSlider(1, 200, 100);
+  // ampLabel = createDiv('Amplitude');
+  // label.child(ampLabel);
+  // label.child(amplitudeSlider);
 
-  opacitySlider = createSlider(0,255,90);
+  opacitySlider = createSlider(0,255,127);
   opacityLabel = createDiv('Opacity');
   label.child(opacityLabel);
   label.child(opacitySlider);
   
 
   // label.parent(docment.body);
+}
+
+function setupPattern() {
+  let fileInput = createFileInput(handlePatternFile);
+  fileInput.elt.click(); // simulate a click event to open the file picker
+}
+
+function handlePatternFile(file) {
+  console.log(file);
+  if (file.type === 'image') {
+    let patternURL = URL.createObjectURL(file.file);
+    patternImage = loadImage(patternURL, () => setPatternCrop(0));
+  } else {
+    patternImage = null;
+    console.error('Invalid file type. Please select an image file.');
+  }
+}
+
+function setPatternCrop(segment) {
+  //console.log(patternImage);
+  segmentWidth = patternImage.width / 4;
+  sx = segment * segmentWidth;
+  sy = 0;
+  sWidth = segmentWidth;
+  sHeight = patternImage.height;
+  //console.log("sx = " + sx);
+  //console.log("sWidth = " + segmentWidth);
+}
+
+function addButton(buttonText, buttonContainer, buttonFunc) {
+  let newButton = createButton(buttonText);
+  newButton.mouseClicked(buttonFunc);
+  newButton.style('font-size', '24px');
+  newButton.style('width', '120px');
+  newButton.style('height', '60px');
+  buttonContainer.child(newButton);
+
+  return newButton;
 }
 
 function draw() {
@@ -159,8 +195,29 @@ function draw() {
   // text(currentAngle, 20, height - 80);
   fill(0); // set fill color
 
-  if (soundFile.duration() > 0)
-    displayRadialGraph(soundFile);
+  push();
+    translate(width/2+transform.x,height/2+transform.y);
+    scale(currentScale);
+    rotate(currentAngle);
+
+    
+
+    if (soundFile.duration() > 0)
+      displayRadialGraph(soundFile);
+
+    
+    if (patternImage) {
+      tint(255, opacitySlider.value());
+      let selectedSegment = Number(segmentSelect.selected()) - 1;
+      setPatternCrop(selectedSegment);
+      //let aspectRatio = patternImage.height / patternImage.width;
+      let patternDisplayWidth = (width * 0.75);
+      let segmentCanvasRatio =  patternDisplayWidth / segmentWidth;
+      let patternDisplayHeight = sHeight * segmentCanvasRatio;
+      image(patternImage, 0, 0, patternDisplayWidth, patternDisplayHeight, sx, sy, sWidth, sHeight);
+    }
+
+  pop();
 }
 
 function startRecording() {
@@ -202,10 +259,7 @@ function stopPlayback() {
 }
 
 function displayRadialGraph(sound) {
-  push();
-    translate(width/2+transform.x,height/2+transform.y);
-    scale(currentScale);
-    rotate(currentAngle);
+  
     let waveform = sound.getPeaks(width/2); // get waveform of sound file
     stroke(255,0,0, opacitySlider.value()); // set stroke color
     strokeWeight(thicknessSlider.value());
@@ -223,8 +277,6 @@ function displayRadialGraph(sound) {
         curveVertex(x, y); // add vertex to shape
       }
     endShape(CLOSE); // end shape and connect last vertex to first vertex
-  pop();
-  
 }
 
 
