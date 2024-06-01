@@ -7,6 +7,7 @@ let captureButton, stopButton, playbackButton, uploadButton; // buttons to start
 let graphGenerated = false;
 let displayShape = false;
 let exportButton;
+let buttonContainer;
 let video; // webcam video
 let thicknessSlider; // slider to control radial graph thickness
 let thicknessLabel; // label for radial graph thickness slider
@@ -26,6 +27,8 @@ let segments;
 let sx, sy, sWidth, sHeight;
 let segmentSelect;
 let segmentWidth;
+const numSegments = 4;
+let numSegmentsInput;
 
 let transform = {
   angle: 0,
@@ -37,9 +40,13 @@ let transform = {
 const playCharacter = 'Play';
 const stopCharacter = 'Stop';
 
+const cornerX = 50;
+const cornerY = 150;
+
 function setup() {
   imageMode(CENTER);
   angleMode(DEGREES);
+  rectMode(CENTER);
   let canvas = createCanvas(windowWidth, windowHeight); // create canvas
   
   interact(canvas.elt)
@@ -99,7 +106,7 @@ function setup() {
   graphX = width / 2;
   graphY = height / 2;
   
-  const buttonContainer = createDiv();
+  buttonContainer = createDiv();
   buttonContainer.addClass('button-container');
 
   const label = createDiv();
@@ -114,20 +121,18 @@ function setup() {
   //   }
   // });
 
+
+  numSegmentsInput = createInput(numSegments);
+  numSegmentsInput.addClass('ui');
+  numSegmentsInput.changed(changeNumSegements);
+  buttonContainer.child(numSegmentsInput);
+
   patternImageButton = addButton('Pattern', buttonContainer, setupPattern);
   // exportButton = addButton('Export', buttonContainer, exportImage);
   // uploadButton = addButton('Load', buttonContainer, uploadFile);
   // playbackButton = addButton(playCharacter, buttonContainer, playbackRecording);
 
-  segmentSelect = createSelect();
-  segmentSelect.option('1');
-  segmentSelect.option('2');
-  segmentSelect.option('3');
-  segmentSelect.option('4');
-  segmentSelect.style('font-size', '24px');
-  segmentSelect.style('width', '120px');
-  segmentSelect.style('height', '60px');
-  buttonContainer.child(segmentSelect);
+  createSegementSelect(numSegments);
 
   // Create slider and label for radial graph thickness
   // thicknessSlider = createSlider(1, 50, 10);
@@ -144,9 +149,6 @@ function setup() {
   opacityLabel = createDiv('Opacity');
   label.child(opacityLabel);
   label.child(opacitySlider);
-  
-
-  // label.parent(docment.body);
 }
 
 function setupPattern() {
@@ -155,7 +157,7 @@ function setupPattern() {
 }
 
 function handlePatternFile(file) {
-  console.log(file);
+  //console.log(file);
   if (file.type === 'image') {
     let patternURL = URL.createObjectURL(file.file);
     patternImage = loadImage(patternURL, () => setPatternCrop(0));
@@ -167,7 +169,8 @@ function handlePatternFile(file) {
 
 function setPatternCrop(segment) {
   //console.log(patternImage);
-  segmentWidth = patternImage.width / 4;
+  let totalSegments = Number(numSegmentsInput.value());
+  segmentWidth = patternImage.width / ((totalSegments) ? totalSegments : numSegments);
   sx = segment * segmentWidth;
   sy = 0;
   sWidth = segmentWidth;
@@ -176,12 +179,27 @@ function setPatternCrop(segment) {
   //console.log("sWidth = " + segmentWidth);
 }
 
+function changeNumSegements() {
+  let totalSegments = Number(numSegmentsInput.value());
+  let newTotal = (totalSegments) ? totalSegments : numSegments;
+  segmentSelect.remove();
+  createSegementSelect(newTotal);
+
+}
+
+function createSegementSelect(segments) {
+  segmentSelect = createSelect();
+  for(let i=1; i <= segments; i++) {
+    segmentSelect.option(i);
+  }
+  segmentSelect.addClass('ui');
+  buttonContainer.child(segmentSelect);;
+}
+
 function addButton(buttonText, buttonContainer, buttonFunc) {
   let newButton = createButton(buttonText);
   newButton.mouseClicked(buttonFunc);
-  newButton.style('font-size', '24px');
-  newButton.style('width', '120px');
-  newButton.style('height', '60px');
+  newButton.addClass('ui');
   buttonContainer.child(newButton);
 
   return newButton;
@@ -190,31 +208,41 @@ function addButton(buttonText, buttonContainer, buttonFunc) {
 function draw() {
   clear();
   textSize(20); // set text size
-  // if (transform.box)
-  //   text(JSON.stringify(transform.box), 20, height - 40);
-  // text(currentAngle, 20, height - 80);
   fill(0); // set fill color
+
+  strokeWeight(5);
+  stroke('orange');
+  line(cornerX,cornerY,cornerX,cornerY+100);
+  line(cornerX,cornerY,cornerX+100,cornerY);
 
   push();
     translate(width/2+transform.x,height/2+transform.y);
     scale(currentScale);
     rotate(currentAngle);
 
-    
-
     if (soundFile.duration() > 0)
       displayRadialGraph(soundFile);
 
-    
     if (patternImage) {
       tint(255, opacitySlider.value());
       let selectedSegment = Number(segmentSelect.selected()) - 1;
       setPatternCrop(selectedSegment);
-      //let aspectRatio = patternImage.height / patternImage.width;
-      let patternDisplayWidth = (width * 0.75);
+      
+      let scaling = 1;      
+      let patternDisplayWidth = (width - 2 * cornerX);
       let segmentCanvasRatio =  patternDisplayWidth / segmentWidth;
       let patternDisplayHeight = sHeight * segmentCanvasRatio;
+      let maxHeight = height - 2 * cornerY;
+      if (patternDisplayHeight > maxHeight) {
+        scaling = maxHeight / patternDisplayHeight;
+        patternDisplayHeight *= scaling;
+        patternDisplayWidth *= scaling;
+      }
+   
       image(patternImage, 0, 0, patternDisplayWidth, patternDisplayHeight, sx, sy, sWidth, sHeight);
+      // stroke('blue');
+      // noFill();
+      // rect(0, 0, patternDisplayWidth, patternDisplayHeight);
     }
 
   pop();
@@ -278,30 +306,6 @@ function displayRadialGraph(sound) {
       }
     endShape(CLOSE); // end shape and connect last vertex to first vertex
 }
-
-
-
-
-
-// // function displayRadialGraph(sound) {
-// //   let waveform = sound.getPeaks(width); // get waveform of sound file
-// //   push();
-// //   stroke(0); // set stroke color
-// //   noFill(); // remove fill color
-// //   beginShape(); // start shape
-// //   for (let i = 0; i < waveform.length; i++) { // loop through waveform
-// //     let angle = map(i, 0, waveform.length, 0, TWO_PI); // map index to angle
-// //     let radius = map(waveform[i], -1, 1, 0, height/2); // map value to radius
-// //     let x = width/2 + radius * cos(angle); // calculate x-coordinate based on angle and radius
-// //     let y = height/2 + radius * sin(angle); // calculate y-coordinate based on angle and radius
-// //     vertex(x, y); // add vertex to shape
-// //   }
-// //   endShape(CLOSE); // end shape and connect last vertex to first vertex
-// //   pop()
-// // }
-
-
-
 
 function display3DRadialGraph(sound) {
   let waveform = sound.getPeaks(width); // get waveform of sound file
